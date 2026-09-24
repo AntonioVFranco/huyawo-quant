@@ -1,6 +1,6 @@
-"""Identity contracts for models and tokenizers."""
+"""Identity contracts for models, tokenizers, and datasets."""
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import Field
 
@@ -21,5 +21,16 @@ class TokenizerIdentity(ContractModel):
 
     source: Literal["huggingface"] = "huggingface"
     tokenizer_id: str = Field(min_length=1, pattern=r"\S")
+    requested_revision: str = Field(min_length=1, pattern=r"\S")
+    resolved_revision: str = Field(min_length=1, pattern=r"\S")
+
+
+class DatasetIdentity(ContractModel):
+    """Resolved identity of a dataset selection."""
+
+    source: Literal["huggingface"] = "huggingface"
+    dataset_id: str = Field(min_length=1, pattern=r"\S")
+    config_name: Annotated[str, Field(min_length=1, pattern=r"\S")] | None = None
+    split: str = Field(min_length=1, pattern=r"\S")
     requested_revision: str = Field(min_length=1, pattern=r"\S")
     resolved_revision: str = Field(min_length=1, pattern=r"\S")

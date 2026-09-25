@@ -9,6 +9,12 @@ from huyawo_quant.contracts.benchmarks import (
     BenchmarkMetric,
     BenchmarkResult,
 )
+from huyawo_quant.contracts.environment import (
+    CudaToolkitFingerprint,
+    EnvironmentFingerprint,
+    NvidiaGpuFingerprint,
+    PythonDistributionFingerprint,
+)
 from huyawo_quant.contracts.evidence import (
     EvidenceBundle,
     EvidenceFileReference,
@@ -22,6 +28,10 @@ from huyawo_quant.contracts.recipes import QuantRecipe
 from huyawo_quant.contracts.targets import HardwareTarget, RuntimeTarget
 
 __all__ = [
+    "PythonDistributionFingerprint",
+    "NvidiaGpuFingerprint",
+    "EnvironmentFingerprint",
+    "CudaToolkitFingerprint",
     "FailureRecord",
     "EvidenceFileReference",
     "EvidenceBundle",

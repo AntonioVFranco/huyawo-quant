@@ -9,6 +9,11 @@ from huyawo_quant.contracts.benchmarks import (
     BenchmarkMetric,
     BenchmarkResult,
 )
+from huyawo_quant.contracts.evidence import (
+    EvidenceBundle,
+    EvidenceFileReference,
+    FailureRecord,
+)
 from huyawo_quant.contracts.identity import DatasetIdentity, ModelIdentity, TokenizerIdentity
 from huyawo_quant.contracts.plans import QuantPlan
 from huyawo_quant.contracts.profiles import EvaluationProfile, WorkloadProfile
@@ -17,6 +22,9 @@ from huyawo_quant.contracts.recipes import QuantRecipe
 from huyawo_quant.contracts.targets import HardwareTarget, RuntimeTarget
 
 __all__ = [
+    "FailureRecord",
+    "EvidenceFileReference",
+    "EvidenceBundle",
     "BenchmarkMetric",
     "BenchmarkResult",
     "ArtifactFileIdentity",

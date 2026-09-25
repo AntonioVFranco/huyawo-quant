@@ -1,3 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "huyawo-quant"
+version = "0.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.13,<3",
+    "huggingface-hub>=2,<3",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra --strict-config --strict-markers"

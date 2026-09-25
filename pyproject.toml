@@ -17,6 +17,10 @@ baseline = [
     "transformers>=5.17,<6",
 ]
 
+quality = [
+    "lm-eval[hf]==0.4.13",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra --strict-config --strict-markers"

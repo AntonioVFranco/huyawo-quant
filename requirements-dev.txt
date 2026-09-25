@@ -1,4 +1,4 @@
--e ".[baseline]"
+-e ".[baseline,quality]"
 pytest==9.1.1
 ruff==0.16.8
 mypy==2.3.1

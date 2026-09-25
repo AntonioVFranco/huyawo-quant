@@ -112,6 +112,67 @@ def test_cuda_toolkit_is_optional(
     assert collector._capture_cuda_toolkit() is None
 
 
+def test_relevant_distributions_cover_quality_environment() -> None:
+    required_quality_distributions = {
+        "absl-py",
+        "accelerate",
+        "aiohappyeyeballs",
+        "aiohttp",
+        "aiosignal",
+        "attrs",
+        "chardet",
+        "charset-normalizer",
+        "cloudpickle",
+        "colorama",
+        "dataproperty",
+        "datasets",
+        "defusedxml",
+        "dill",
+        "evaluate",
+        "frozenlist",
+        "fsspec",
+        "joblib",
+        "lm-eval",
+        "lxml",
+        "mbstrdecoder",
+        "more-itertools",
+        "multidict",
+        "multiprocess",
+        "narwhals",
+        "nltk",
+        "pandas",
+        "pathvalidate",
+        "peft",
+        "portalocker",
+        "propcache",
+        "psutil",
+        "pyarrow",
+        "pytablewriter",
+        "python-dateutil",
+        "pytz",
+        "requests",
+        "rouge-score",
+        "sacrebleu",
+        "scikit-learn",
+        "scipy",
+        "six",
+        "sqlitedict",
+        "tabledata",
+        "tabulate",
+        "tcolorpy",
+        "threadpoolctl",
+        "tokenizers",
+        "typepy",
+        "urllib3",
+        "word2number",
+        "xxhash",
+        "yarl",
+    }
+
+    assert required_quality_distributions <= set(collector.RELEVANT_DISTRIBUTIONS)
+    assert len(collector.RELEVANT_DISTRIBUTIONS) == len(set(collector.RELEVANT_DISTRIBUTIONS))
+
+
 def test_python_distribution_capture_preserves_absence(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

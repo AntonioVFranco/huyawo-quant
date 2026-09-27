@@ -2,17 +2,27 @@
 
 from __future__ import annotations
 
+import json
+from datetime import UTC, datetime
+from importlib.metadata import version as distribution_version
 from typing import cast
 
 import huyawo_quant.evaluation.lm_eval as lm_eval_adapter
 import pytest
 from huyawo_quant.contracts import (
+    BenchmarkResult,
+    CudaToolkitFingerprint,
     DatasetIdentity,
+    EnvironmentFingerprint,
     EvaluationProfile,
     ModelIdentity,
+    NvidiaGpuFingerprint,
+    PythonDistributionFingerprint,
     TokenizerIdentity,
 )
 from huyawo_quant.evaluation import (
+    build_hellaswag_authoritative_run_manifest,
+    build_hellaswag_benchmark_result,
     build_hellaswag_evaluation_profile,
     build_hellaswag_model_args,
     build_hellaswag_simple_evaluate_kwargs,
@@ -413,3 +423,370 @@ def test_model_args_rejects_wrong_tokenizer_identity(
                 resolved_revision=resolved_revision,
             ),
         )
+
+
+def _environment_fingerprint() -> EnvironmentFingerprint:
+    return EnvironmentFingerprint(
+        captured_at=datetime(
+            2026,
+            9,
+            27,
+            14,
+            0,
+            tzinfo=UTC,
+        ),
+        project_root="/workspace/huyawo-quant",
+        working_directory="/workspace/huyawo-quant",
+        virtual_environment="/workspace/huyawo-quant/.venv",
+        python_executable=("/workspace/huyawo-quant/.venv/bin/python"),
+        python_version="3.12.3",
+        python_implementation="CPython",
+        python_prefix="/workspace/huyawo-quant/.venv",
+        python_base_prefix="/usr",
+        platform_system="Linux",
+        platform_release="test-release",
+        platform_machine="x86_64",
+        platform_version="test-version",
+        cuda_visible_devices=None,
+        cuda_device_order=None,
+        python_distributions=(
+            PythonDistributionFingerprint(
+                name="lm-eval",
+                status="INSTALLED",
+                version="0.4.13",
+            ),
+        ),
+        nvidia_smi_path="/usr/bin/nvidia-smi",
+        nvidia_gpus=(
+            NvidiaGpuFingerprint(
+                observed_index=0,
+                name="NVIDIA RTX A5000",
+                uuid="GPU-test",
+                pci_bus_id="00000000:01:00.0",
+                memory_total_mib=24564,
+                driver_version="580.159.04",
+                compute_capability_major=8,
+                compute_capability_minor=6,
+            ),
+        ),
+        cuda_toolkit=CudaToolkitFingerprint(
+            nvcc_path="/usr/local/cuda/bin/nvcc",
+            release="12.8",
+            version="12.8.93",
+        ),
+    )
+
+
+def _authoritative_lm_eval_result(
+    *,
+    acc: object = 0.5,
+    acc_norm: object = 0.6,
+) -> dict[str, object]:
+    return {
+        "lm_eval_version": "0.4.13",
+        "config": {
+            "batch_size": 1,
+            "device": "cuda:0",
+            "limit": None,
+            "random_seed": 42,
+            "numpy_random_seed": 42,
+            "torch_random_seed": 42,
+            "fewshot_random_seed": 42,
+        },
+        "n-samples": {
+            "hellaswag": {
+                "original": 2,
+                "effective": 2,
+            },
+        },
+        "results": {
+            "hellaswag": {
+                "name": "hellaswag",
+                "alias": "hellaswag",
+                "sample_len": 2,
+                "acc,none": acc,
+                "acc_norm,none": acc_norm,
+                "acc_stderr,none": 0.1,
+                "acc_norm_stderr,none": 0.1,
+            },
+        },
+        "samples": {
+            "hellaswag": [
+                {"doc_id": 0},
+                {"doc_id": 1},
+            ],
+        },
+    }
+
+
+def test_build_authoritative_run_manifest_is_json_compatible() -> None:
+    manifest = build_hellaswag_authoritative_run_manifest(
+        _model_identity(),
+        _tokenizer_identity(),
+        _dataset_identity(),
+        _environment_fingerprint(),
+        run_id="m5-hellaswag-baseline-001",
+        created_at=datetime(
+            2026,
+            9,
+            27,
+            14,
+            30,
+            tzinfo=UTC,
+        ),
+    )
+
+    assert manifest["schema_version"] == "1"
+    assert manifest["run_id"] == "m5-hellaswag-baseline-001"
+    assert manifest["run_kind"] == "baseline"
+    assert manifest["purpose"] == "quality_baseline"
+    assert manifest["authoritative"] is True
+    assert manifest["quant_version"] == distribution_version("huyawo-quant")
+    assert manifest["created_at"] == "2026-09-27T14:30:00+00:00"
+
+    profile = cast(
+        dict[str, object],
+        manifest["evaluation_profile"],
+    )
+
+    assert profile["sample_limit"] is None
+    assert profile["seed"] == 42
+
+    invocation = cast(
+        dict[str, object],
+        manifest["simple_evaluate_kwargs"],
+    )
+
+    assert invocation["limit"] is None
+    assert invocation["batch_size"] == 1
+    assert invocation["device"] == "cuda:0"
+    assert invocation["random_seed"] == 42
+    assert invocation["numpy_random_seed"] == 42
+    assert invocation["torch_random_seed"] == 42
+    assert invocation["fewshot_random_seed"] == 42
+
+    tasks = cast(
+        list[dict[str, object]],
+        invocation["tasks"],
+    )
+
+    assert len(tasks) == 1
+    assert tasks[0]["dataset_kwargs"] == {
+        "revision": _DATASET_SHA,
+    }
+    assert tasks[0]["metadata"] == {
+        "version": 1.0,
+    }
+    assert tasks[0]["process_docs"] == "lm_eval.tasks.hellaswag.utils.process_docs"
+
+    serialized = json.dumps(
+        manifest,
+        sort_keys=True,
+    )
+
+    assert json.loads(serialized) == manifest
+
+
+@pytest.mark.parametrize(
+    "run_id",
+    [
+        "",
+        "   ",
+    ],
+)
+def test_build_authoritative_run_manifest_rejects_empty_run_id(
+    run_id: str,
+) -> None:
+    with pytest.raises(
+        ValueError,
+        match="run_id",
+    ):
+        build_hellaswag_authoritative_run_manifest(
+            _model_identity(),
+            _tokenizer_identity(),
+            _dataset_identity(),
+            _environment_fingerprint(),
+            run_id=run_id,
+            created_at=datetime(
+                2026,
+                9,
+                27,
+                14,
+                30,
+                tzinfo=UTC,
+            ),
+        )
+
+
+def test_build_authoritative_run_manifest_rejects_naive_timestamp() -> None:
+    with pytest.raises(
+        ValueError,
+        match="timezone-aware",
+    ):
+        build_hellaswag_authoritative_run_manifest(
+            _model_identity(),
+            _tokenizer_identity(),
+            _dataset_identity(),
+            _environment_fingerprint(),
+            run_id="m5-hellaswag-baseline-001",
+            created_at=datetime(
+                2026,
+                9,
+                27,
+                14,
+                30,
+            ),
+        )
+
+
+def test_build_authoritative_run_manifest_rejects_wrong_environment_type() -> None:
+    with pytest.raises(
+        TypeError,
+        match="EnvironmentFingerprint",
+    ):
+        build_hellaswag_authoritative_run_manifest(
+            _model_identity(),
+            _tokenizer_identity(),
+            _dataset_identity(),
+            cast(
+                EnvironmentFingerprint,
+                object(),
+            ),
+            run_id="m5-hellaswag-baseline-001",
+            created_at=datetime(
+                2026,
+                9,
+                27,
+                14,
+                30,
+                tzinfo=UTC,
+            ),
+        )
+
+
+def test_build_hellaswag_benchmark_result_projects_authoritative_metrics() -> None:
+    result = build_hellaswag_benchmark_result(
+        _authoritative_lm_eval_result(),
+    )
+
+    assert isinstance(
+        result,
+        BenchmarkResult,
+    )
+
+    assert result.model_dump(mode="json") == {
+        "result_kind": "quality",
+        "evaluation_profile": {
+            "benchmark": "lm-evaluation-harness",
+            "benchmark_version": "0.4.13",
+            "tasks": ["hellaswag"],
+            "metrics": ["acc", "acc_norm"],
+            "sample_limit": None,
+            "seed": 42,
+        },
+        "workload_profile": None,
+        "metrics": [
+            {
+                "name": "acc",
+                "scope": "hellaswag",
+                "unit": "ratio",
+                "direction": "higher_is_better",
+                "observations": [0.5],
+                "aggregation": "mean",
+                "aggregate": 0.5,
+            },
+            {
+                "name": "acc_norm",
+                "scope": "hellaswag",
+                "unit": "ratio",
+                "direction": "higher_is_better",
+                "observations": [0.6],
+                "aggregation": "mean",
+                "aggregate": 0.6,
+            },
+        ],
+    }
+
+
+def test_build_hellaswag_benchmark_result_rejects_wrong_lm_eval_version() -> None:
+    payload = _authoritative_lm_eval_result()
+    payload["lm_eval_version"] = "0.4.12"
+
+    with pytest.raises(
+        ValueError,
+        match="result version",
+    ):
+        build_hellaswag_benchmark_result(payload)
+
+
+def test_build_hellaswag_benchmark_result_rejects_missing_metric() -> None:
+    payload = _authoritative_lm_eval_result()
+
+    results = cast(
+        dict[str, object],
+        payload["results"],
+    )
+
+    hellaswag = cast(
+        dict[str, object],
+        results["hellaswag"],
+    )
+
+    del hellaswag["acc,none"]
+
+    with pytest.raises(
+        ValueError,
+        match="hellaswag acc",
+    ):
+        build_hellaswag_benchmark_result(payload)
+
+
+def test_build_hellaswag_benchmark_result_rejects_boolean_metric() -> None:
+    with pytest.raises(
+        ValueError,
+        match="numeric value",
+    ):
+        build_hellaswag_benchmark_result(
+            _authoritative_lm_eval_result(
+                acc=True,
+            )
+        )
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        float("nan"),
+        float("inf"),
+        float("-inf"),
+    ],
+)
+def test_build_hellaswag_benchmark_result_rejects_nonfinite_metric(
+    value: float,
+) -> None:
+    with pytest.raises(
+        ValueError,
+        match="finite",
+    ):
+        build_hellaswag_benchmark_result(
+            _authoritative_lm_eval_result(
+                acc_norm=value,
+            )
+        )
+
+
+def test_build_hellaswag_benchmark_result_rejects_limited_result() -> None:
+    payload = _authoritative_lm_eval_result()
+
+    config = cast(
+        dict[str, object],
+        payload["config"],
+    )
+
+    config["limit"] = 8
+
+    with pytest.raises(
+        ValueError,
+        match="limit",
+    ):
+        build_hellaswag_benchmark_result(payload)

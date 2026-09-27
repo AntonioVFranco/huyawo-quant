@@ -3,15 +3,20 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from datetime import UTC, datetime
 from importlib.metadata import version as distribution_version
 from importlib.resources import as_file, files
+from math import isfinite
 from re import fullmatch
 from typing import cast
 
 from lm_eval.tasks._yaml_loader import load_yaml  # type: ignore[import-untyped]
 
 from huyawo_quant.contracts import (
+    BenchmarkMetric,
+    BenchmarkResult,
     DatasetIdentity,
+    EnvironmentFingerprint,
     EvaluationProfile,
     ModelIdentity,
     TokenizerIdentity,
@@ -303,3 +308,306 @@ def build_hellaswag_simple_evaluate_kwargs(
         "torch_random_seed": _EXPECTED_SEED,
         "fewshot_random_seed": _EXPECTED_SEED,
     }
+
+
+def _require_mapping(
+    value: object,
+    *,
+    field_name: str,
+) -> Mapping[str, object]:
+    if not isinstance(value, Mapping):
+        raise ValueError(f"{field_name} must be a mapping")
+
+    return cast(Mapping[str, object], value)
+
+
+def _qualified_callable_name(
+    value: object,
+    *,
+    field_name: str,
+) -> str:
+    if not callable(value):
+        raise ValueError(f"{field_name} must be callable")
+
+    module = getattr(value, "__module__", None)
+    qualname = getattr(value, "__qualname__", None)
+
+    if not isinstance(module, str) or not module:
+        raise ValueError(f"{field_name} callable must declare __module__")
+
+    if not isinstance(qualname, str) or not qualname:
+        raise ValueError(f"{field_name} callable must declare __qualname__")
+
+    return f"{module}.{qualname}"
+
+
+def _build_hellaswag_manifest_task_config(
+    task_config: NativeTaskConfig,
+) -> dict[str, object]:
+    dataset_kwargs = _require_mapping(
+        task_config.get("dataset_kwargs"),
+        field_name="HellaSwag dataset_kwargs",
+    )
+
+    return {
+        "task": task_config["task"],
+        "dataset_path": task_config["dataset_path"],
+        "dataset_name": task_config["dataset_name"],
+        "validation_split": task_config["validation_split"],
+        "output_type": task_config["output_type"],
+        "dataset_kwargs": dict(dataset_kwargs),
+        "num_fewshot": task_config["num_fewshot"],
+        "metadata": {
+            "version": _EXPECTED_METADATA_VERSION,
+        },
+        "metric_list": [
+            {
+                "metric": metric,
+                "aggregation": aggregation,
+                "higher_is_better": higher_is_better,
+            }
+            for (
+                metric,
+                aggregation,
+                higher_is_better,
+            ) in _EXPECTED_METRIC_SIGNATURE
+        ],
+        "process_docs": _qualified_callable_name(
+            task_config.get("process_docs"),
+            field_name="HellaSwag process_docs",
+        ),
+    }
+
+
+def build_hellaswag_authoritative_run_manifest(
+    model_identity: ModelIdentity,
+    tokenizer_identity: TokenizerIdentity,
+    dataset_identity: DatasetIdentity,
+    environment: EnvironmentFingerprint,
+    *,
+    run_id: str,
+    created_at: datetime,
+) -> dict[str, object]:
+    """Build the JSON-compatible authoritative HellaSwag run manifest."""
+    if not isinstance(environment, EnvironmentFingerprint):
+        raise TypeError("environment must be an EnvironmentFingerprint")
+
+    if not isinstance(run_id, str):
+        raise TypeError("run_id must be a string")
+
+    if not run_id or run_id.isspace():
+        raise ValueError("run_id must contain a non-whitespace character")
+
+    if not isinstance(created_at, datetime):
+        raise TypeError("created_at must be a datetime")
+
+    if created_at.tzinfo is None or created_at.utcoffset() is None:
+        raise ValueError("created_at must be timezone-aware")
+
+    evaluation_profile = build_hellaswag_evaluation_profile()
+
+    invocation = build_hellaswag_simple_evaluate_kwargs(
+        model_identity,
+        tokenizer_identity,
+        dataset_identity,
+    )
+
+    tasks_value = invocation.get("tasks")
+
+    if not isinstance(tasks_value, list) or len(tasks_value) != 1:
+        raise RuntimeError("HellaSwag authoritative invocation must contain exactly one task")
+
+    task_value = tasks_value[0]
+
+    if not isinstance(task_value, dict):
+        raise RuntimeError("HellaSwag authoritative task config must be a dictionary")
+
+    manifest_invocation = dict(invocation)
+    manifest_invocation["tasks"] = [
+        _build_hellaswag_manifest_task_config(
+            cast(NativeTaskConfig, task_value),
+        )
+    ]
+
+    return {
+        "schema_version": "1",
+        "run_id": run_id,
+        "run_kind": "baseline",
+        "purpose": "quality_baseline",
+        "authoritative": True,
+        "quant_version": distribution_version("huyawo-quant"),
+        "created_at": created_at.astimezone(UTC).isoformat(),
+        "model_identity": model_identity.model_dump(mode="json"),
+        "tokenizer_identity": tokenizer_identity.model_dump(mode="json"),
+        "dataset_identity": dataset_identity.model_dump(mode="json"),
+        "evaluation_profile": evaluation_profile.model_dump(mode="json"),
+        "environment": environment.model_dump(mode="json"),
+        "simple_evaluate_kwargs": manifest_invocation,
+    }
+
+
+def _require_finite_number(
+    value: object,
+    *,
+    field_name: str,
+) -> float:
+    if isinstance(value, bool) or not isinstance(
+        value,
+        (int, float),
+    ):
+        raise ValueError(f"{field_name} must be a numeric value")
+
+    numeric_value = float(value)
+
+    if not isfinite(numeric_value):
+        raise ValueError(f"{field_name} must be finite")
+
+    return numeric_value
+
+
+def _require_positive_int(
+    value: object,
+    *,
+    field_name: str,
+) -> int:
+    if type(value) is not int or value <= 0:
+        raise ValueError(f"{field_name} must be a positive integer")
+
+    return value
+
+
+def build_hellaswag_benchmark_result(
+    result_payload: Mapping[str, object],
+) -> BenchmarkResult:
+    """Project one complete authoritative HellaSwag result."""
+    if result_payload.get("lm_eval_version") != _EXPECTED_LM_EVAL_VERSION:
+        raise ValueError(
+            "lm-eval result version must match the accepted "
+            f"benchmark version {_EXPECTED_LM_EVAL_VERSION}"
+        )
+
+    config = _require_mapping(
+        result_payload.get("config"),
+        field_name="lm-eval config",
+    )
+
+    expected_config: dict[str, object] = {
+        "batch_size": _EXPECTED_BATCH_SIZE,
+        "device": _EXPECTED_DEVICE,
+        "limit": None,
+        "random_seed": _EXPECTED_SEED,
+        "numpy_random_seed": _EXPECTED_SEED,
+        "torch_random_seed": _EXPECTED_SEED,
+        "fewshot_random_seed": _EXPECTED_SEED,
+    }
+
+    for field_name, expected in expected_config.items():
+        if field_name not in config:
+            raise ValueError(f"lm-eval config is missing {field_name}")
+
+        observed = config[field_name]
+
+        if observed != expected:
+            raise ValueError(f"lm-eval config {field_name}={observed!r}; expected {expected!r}")
+
+    sample_counts = _require_mapping(
+        result_payload.get("n-samples"),
+        field_name="lm-eval n-samples",
+    )
+
+    task_sample_counts = _require_mapping(
+        sample_counts.get(_EXPECTED_TASK),
+        field_name="lm-eval HellaSwag sample counts",
+    )
+
+    original_samples = _require_positive_int(
+        task_sample_counts.get("original"),
+        field_name="lm-eval HellaSwag original sample count",
+    )
+
+    effective_samples = _require_positive_int(
+        task_sample_counts.get("effective"),
+        field_name="lm-eval HellaSwag effective sample count",
+    )
+
+    if effective_samples != original_samples:
+        raise ValueError("authoritative HellaSwag result must cover the complete sample scope")
+
+    results = _require_mapping(
+        result_payload.get("results"),
+        field_name="lm-eval results",
+    )
+
+    task_result = _require_mapping(
+        results.get(_EXPECTED_TASK),
+        field_name="lm-eval HellaSwag result",
+    )
+
+    if task_result.get("name") != _EXPECTED_TASK:
+        raise ValueError("lm-eval HellaSwag result must declare name='hellaswag'")
+
+    sample_len = _require_positive_int(
+        task_result.get("sample_len"),
+        field_name="lm-eval HellaSwag sample_len",
+    )
+
+    if sample_len != effective_samples:
+        raise ValueError("lm-eval HellaSwag sample_len does not match effective sample count")
+
+    samples = _require_mapping(
+        result_payload.get("samples"),
+        field_name="lm-eval samples",
+    )
+
+    task_samples = samples.get(_EXPECTED_TASK)
+
+    if not isinstance(task_samples, list):
+        raise ValueError("lm-eval HellaSwag samples must be a list")
+
+    if len(task_samples) != effective_samples:
+        raise ValueError("lm-eval HellaSwag samples do not match effective sample count")
+
+    acc = _require_finite_number(
+        task_result.get("acc,none"),
+        field_name="hellaswag acc",
+    )
+
+    acc_norm = _require_finite_number(
+        task_result.get("acc_norm,none"),
+        field_name="hellaswag acc_norm",
+    )
+
+    _require_finite_number(
+        task_result.get("acc_stderr,none"),
+        field_name="hellaswag acc stderr",
+    )
+
+    _require_finite_number(
+        task_result.get("acc_norm_stderr,none"),
+        field_name="hellaswag acc_norm stderr",
+    )
+
+    return BenchmarkResult(
+        result_kind="quality",
+        evaluation_profile=build_hellaswag_evaluation_profile(),
+        metrics=(
+            BenchmarkMetric(
+                name="acc",
+                scope=_EXPECTED_TASK,
+                unit="ratio",
+                direction="higher_is_better",
+                observations=(acc,),
+                aggregation="mean",
+                aggregate=acc,
+            ),
+            BenchmarkMetric(
+                name="acc_norm",
+                scope=_EXPECTED_TASK,
+                unit="ratio",
+                direction="higher_is_better",
+                observations=(acc_norm,),
+                aggregation="mean",
+                aggregate=acc_norm,
+            ),
+        ),
+    )

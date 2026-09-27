@@ -1,0 +1,51 @@
+{
+  "apply_chat_template": false,
+  "batch_size": 1,
+  "device": "cuda:0",
+  "fewshot_random_seed": 42,
+  "limit": null,
+  "log_samples": true,
+  "model": "hf",
+  "model_args": {
+    "dtype": "bfloat16",
+    "pretrained": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+    "trust_remote_code": false,
+    "use_fast_tokenizer": true
+  },
+  "num_fewshot": 0,
+  "numpy_random_seed": 42,
+  "predict_only": false,
+  "random_seed": 42,
+  "tasks": [
+    {
+      "dataset_kwargs": {
+        "revision": "218ec52e09a7e7462a5400043bb9a69a41d06b76"
+      },
+      "dataset_name": null,
+      "dataset_path": "Rowan/hellaswag",
+      "metadata": {
+        "version": 1.0
+      },
+      "metric_list": [
+        {
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "metric": "acc"
+        },
+        {
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "metric": "acc_norm"
+        }
+      ],
+      "num_fewshot": 0,
+      "output_type": "multiple_choice",
+      "process_docs": "lm_eval.tasks.hellaswag.utils.process_docs",
+      "task": "hellaswag",
+      "validation_split": "validation"
+    }
+  ],
+  "torch_random_seed": 42
+}

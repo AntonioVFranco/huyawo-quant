@@ -1,0 +1,13 @@
+{
+  "benchmark": "lm-evaluation-harness",
+  "benchmark_version": "0.4.13",
+  "metrics": [
+    "acc",
+    "acc_norm"
+  ],
+  "sample_limit": null,
+  "seed": 42,
+  "tasks": [
+    "hellaswag"
+  ]
+}

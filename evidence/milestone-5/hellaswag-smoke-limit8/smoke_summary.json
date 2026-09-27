@@ -1,0 +1,16 @@
+{
+  "acc": 0.25,
+  "acc_key": "acc,none",
+  "acc_norm": 0.0,
+  "acc_norm_key": "acc_norm,none",
+  "authoritative": false,
+  "benchmark_claim_allowed": false,
+  "cuda_peak_memory_allocated_bytes": 1049254912,
+  "elapsed_seconds": 273.0799950202927,
+  "end_utc": "2026-09-27T00:36:05.900948+00:00",
+  "limit": 8,
+  "sample_count": 8,
+  "start_utc": "2026-09-27T00:31:32.563675+00:00",
+  "status": "PASSED",
+  "task": "hellaswag"
+}

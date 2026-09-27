@@ -1,0 +1,948 @@
+{
+  "config": {
+    "batch_size": 1,
+    "batch_sizes": [],
+    "bootstrap_iters": 100000,
+    "device": "cuda:0",
+    "fewshot_seed": 42,
+    "gen_kwargs": null,
+    "limit": 8,
+    "model": "hf",
+    "model_args": {
+      "dtype": "bfloat16",
+      "pretrained": "Qwen/Qwen2.5-0.5B-Instruct",
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+      "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+      "trust_remote_code": false,
+      "use_fast_tokenizer": true
+    },
+    "model_dtype": "torch.bfloat16",
+    "model_num_parameters": 494032768,
+    "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "model_sha": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "numpy_seed": 42,
+    "random_seed": 42,
+    "torch_seed": 42,
+    "use_cache": null
+  },
+  "configs": {
+    "hellaswag": {
+      "dataset_kwargs": {
+        "revision": "218ec52e09a7e7462a5400043bb9a69a41d06b76"
+      },
+      "dataset_path": "Rowan/hellaswag",
+      "description": "",
+      "doc_to_choice": "choices",
+      "doc_to_target": "{{label}}",
+      "doc_to_text": "{{query}}",
+      "fewshot_config": {
+        "doc_to_choice": "choices",
+        "doc_to_target": "{{label}}",
+        "doc_to_text": "{{query}}",
+        "fewshot_delimiter": "\n\n",
+        "fewshot_indices": null,
+        "gen_prefix": null,
+        "process_docs": "lm_eval.tasks.hellaswag.utils.process_docs",
+        "sampler": "default",
+        "samples": null,
+        "split": null,
+        "target_delimiter": " "
+      },
+      "fewshot_delimiter": "\n\n",
+      "metadata": {
+        "config_source": "inline",
+        "dtype": "bfloat16",
+        "pretrained": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+        "trust_remote_code": false,
+        "use_fast_tokenizer": true,
+        "version": 1.0
+      },
+      "metric_list": [
+        {
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "metric": "acc"
+        },
+        {
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "metric": "acc_norm"
+        }
+      ],
+      "num_fewshot": 0,
+      "output_type": "multiple_choice",
+      "process_docs": "def process_docs(dataset: datasets.Dataset) -> datasets.Dataset:\n    def _process_doc(doc):\n        ctx = doc[\"ctx_a\"] + \" \" + doc[\"ctx_b\"].capitalize()\n        out_doc = {\n            \"query\": preprocess(doc[\"activity_label\"] + \": \" + ctx),\n            \"choices\": [preprocess(ending) for ending in doc[\"endings\"]],\n            \"gold\": int(doc[\"label\"]),\n        }\n        return out_doc\n\n    return dataset.map(_process_doc)\n",
+      "repeats": 1,
+      "should_decontaminate": false,
+      "target_delimiter": " ",
+      "task": "hellaswag",
+      "training_split": "train",
+      "unsafe_code": false,
+      "validation_split": "validation"
+    }
+  },
+  "date": 1790469092.818443,
+  "eot_token_id": 151645,
+  "git_hash": "622229f",
+  "group_subtasks": {},
+  "higher_is_better": {
+    "hellaswag": {
+      "acc": true,
+      "acc_norm": true
+    }
+  },
+  "lm_eval_version": "0.4.13",
+  "max_length": 32768,
+  "n-samples": {
+    "hellaswag": {
+      "effective": 8,
+      "original": 10042
+    }
+  },
+  "n-shot": {
+    "hellaswag": 0
+  },
+  "pretty_env_info": "PyTorch version: 2.14.0+cu130\nIs debug build: False\nCUDA used to build PyTorch: 13.0\nROCM used to build PyTorch: N/A\n\nOS: Ubuntu 24.04.3 LTS (x86_64)\nGCC version: (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0\nClang version: Could not collect\nCMake version: version 3.28.3\nLibc version: glibc-2.39\n\nPython version: 3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0] (64-bit runtime)\nPython platform: Linux-6.8.0-134-generic-x86_64-with-glibc2.39\nIs CUDA available: True\nCUDA runtime version: 12.8.93\nCUDA_MODULE_LOADING set to: \nGPU models and configuration: GPU 0: NVIDIA RTX A5000\nNvidia driver version: 580.159.04\ncuDNN version: Probably one of the following:\n/usr/lib/x86_64-linux-gnu/libcudnn.so.9.8.0\n/usr/lib/x86_64-linux-gnu/libcudnn_adv.so.9.8.0\n/usr/lib/x86_64-linux-gnu/libcudnn_cnn.so.9.8.0\n/usr/lib/x86_64-linux-gnu/libcudnn_engines_precompiled.so.9.8.0\n/usr/lib/x86_64-linux-gnu/libcudnn_engines_runtime_compiled.so.9.8.0\n/usr/lib/x86_64-linux-gnu/libcudnn_graph.so.9.8.0\n/usr/lib/x86_64-linux-gnu/libcudnn_heuristic.so.9.8.0\n/usr/lib/x86_64-linux-gnu/libcudnn_ops.so.9.8.0\nIs XPU available: False\nHIP runtime version: N/A\nMIOpen runtime version: N/A\nIs XNNPACK available: False\nCaching allocator config: N/A\n\nCPU:\nArchitecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           52 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  96\nOn-line CPU(s) list:                     0-95\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6342 CPU @ 2.80GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      24\nSocket(s):                               2\nStepping:                                6\nCPU(s) scaling MHz:                      32%\nCPU max MHz:                             3500.0000\nCPU min MHz:                             800.0000\nBogoMIPS:                                5600.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               2.3 MiB (48 instances)\nL1i cache:                               1.5 MiB (48 instances)\nL2 cache:                                60 MiB (48 instances)\nL3 cache:                                72 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0-23,48-71\nNUMA node1 CPU(s):                       24-47,72-95\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n\nVersions of relevant libraries:\n[pip3] mypy==2.3.1\n[pip3] mypy_extensions==1.1.0\n[pip3] numpy==2.5.3\n[pip3] nvidia-cublas==13.1.1.3\n[pip3] nvidia-cuda-cupti==13.0.85\n[pip3] nvidia-cuda-nvrtc==13.0.88\n[pip3] nvidia-cuda-runtime==13.0.96\n[pip3] nvidia-cudnn-cu13==9.24.0.43\n[pip3] nvidia-cufft==12.0.0.61\n[pip3] nvidia-curand==10.4.0.35\n[pip3] nvidia-cusolver==12.0.4.66\n[pip3] nvidia-cusparse==12.6.3.3\n[pip3] nvidia-cusparselt-cu13==0.8.1\n[pip3] nvidia-nccl-cu13==2.30.7\n[pip3] nvidia-nvjitlink==13.4.92\n[pip3] nvidia-nvtx==13.0.85\n[pip3] torch==2.14.0\n[pip3] triton==3.8.0\n[conda] Could not collect",
+  "results": {
+    "hellaswag": {
+      "acc,none": 0.25,
+      "acc_norm,none": 0.0,
+      "acc_norm_stderr,none": 0.0,
+      "acc_stderr,none": 0.16366341767699427,
+      "alias": "hellaswag",
+      "name": "hellaswag",
+      "sample_len": 8
+    }
+  },
+  "samples": {
+    "hellaswag": [
+      {
+        "acc": 0.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "Roof shingle removal: A man is sitting on a roof. He",
+            " is using wrap to wrap a pair of skis."
+          ],
+          [
+            "Roof shingle removal: A man is sitting on a roof. He",
+            " is ripping level tiles off."
+          ],
+          [
+            "Roof shingle removal: A man is sitting on a roof. He",
+            " is holding a rubik's cube."
+          ],
+          [
+            "Roof shingle removal: A man is sitting on a roof. He",
+            " starts pulling up roofing on a roof."
+          ]
+        ],
+        "doc": {
+          "activity_label": "Roof shingle removal",
+          "choices": [
+            "is using wrap to wrap a pair of skis.",
+            "is ripping level tiles off.",
+            "is holding a rubik's cube.",
+            "starts pulling up roofing on a roof."
+          ],
+          "ctx": "A man is sitting on a roof. he",
+          "ctx_a": "A man is sitting on a roof.",
+          "ctx_b": "he",
+          "endings": [
+            "is using wrap to wrap a pair of skis.",
+            "is ripping level tiles off.",
+            "is holding a rubik's cube.",
+            "starts pulling up roofing on a roof."
+          ],
+          "gold": 3,
+          "ind": 24,
+          "label": "3",
+          "query": "Roof shingle removal: A man is sitting on a roof. He",
+          "source_id": "activitynet~v_-JhWjGDPHMY",
+          "split": "val",
+          "split_type": "indomain"
+        },
+        "doc_hash": "5fa398b50d156bdf77b474f3b43a03352e9a46bddfc7bb62e1038f7b4f12bbd1",
+        "doc_id": 0,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -46.25,
+            false
+          ],
+          [
+            -31.25,
+            false
+          ],
+          [
+            -21.0,
+            false
+          ],
+          [
+            -34.5,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "e63087504993cd36ee0de69dc9b1ab25ac86550530f0b38fd17b14d3c4cf4f38",
+        "resps": [
+          [
+            [
+              -46.25,
+              false
+            ]
+          ],
+          [
+            [
+              -31.25,
+              false
+            ]
+          ],
+          [
+            [
+              -21.0,
+              false
+            ]
+          ],
+          [
+            [
+              -34.5,
+              false
+            ]
+          ]
+        ],
+        "target": 3,
+        "target_hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+      },
+      {
+        "acc": 0.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "Clean and jerk: A lady walks to a barbell. She bends down and grabs the pole. The lady",
+            " swings and lands in her arms."
+          ],
+          [
+            "Clean and jerk: A lady walks to a barbell. She bends down and grabs the pole. The lady",
+            " pulls the barbell forward."
+          ],
+          [
+            "Clean and jerk: A lady walks to a barbell. She bends down and grabs the pole. The lady",
+            " pulls a rope attached to the barbell."
+          ],
+          [
+            "Clean and jerk: A lady walks to a barbell. She bends down and grabs the pole. The lady",
+            " stands and lifts the weight over her head."
+          ]
+        ],
+        "doc": {
+          "activity_label": "Clean and jerk",
+          "choices": [
+            "swings and lands in her arms.",
+            "pulls the barbell forward.",
+            "pulls a rope attached to the barbell.",
+            "stands and lifts the weight over her head."
+          ],
+          "ctx": "A lady walks to a barbell. She bends down and grabs the pole. the lady",
+          "ctx_a": "A lady walks to a barbell. She bends down and grabs the pole.",
+          "ctx_b": "the lady",
+          "endings": [
+            "swings and lands in her arms.",
+            "pulls the barbell forward.",
+            "pulls a rope attached to the barbell.",
+            "stands and lifts the weight over her head."
+          ],
+          "gold": 3,
+          "ind": 92,
+          "label": "3",
+          "query": "Clean and jerk: A lady walks to a barbell. She bends down and grabs the pole. The lady",
+          "source_id": "activitynet~v_-lJS58hyo1c",
+          "split": "val",
+          "split_type": "zeroshot"
+        },
+        "doc_hash": "08296d87a2d1cb270a714773cb78d37f02f82661a082462fa53b437dfa0e3a5e",
+        "doc_id": 1,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -21.5,
+            false
+          ],
+          [
+            -13.375,
+            false
+          ],
+          [
+            -15.4375,
+            false
+          ],
+          [
+            -20.375,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "3b9f9052a08d02c8e1569c3193b21da7a40a88d23a03431937a57658ccfbd8e3",
+        "resps": [
+          [
+            [
+              -21.5,
+              false
+            ]
+          ],
+          [
+            [
+              -13.375,
+              false
+            ]
+          ],
+          [
+            [
+              -15.4375,
+              false
+            ]
+          ],
+          [
+            [
+              -20.375,
+              false
+            ]
+          ]
+        ],
+        "target": 3,
+        "target_hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+      },
+      {
+        "acc": 1.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "Canoeing: Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background. The child and a different man",
+            " are then shown paddling down a river in a boat while a woman talks."
+          ],
+          [
+            "Canoeing: Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background. The child and a different man",
+            " are driving the canoe, they go down the river flowing side to side."
+          ],
+          [
+            "Canoeing: Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background. The child and a different man",
+            " sit in a canoe while the man paddles."
+          ],
+          [
+            "Canoeing: Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background. The child and a different man",
+            " walking go down the rapids, while the man in his helicopter almost falls and goes out of canoehood."
+          ]
+        ],
+        "doc": {
+          "activity_label": "Canoeing",
+          "choices": [
+            "are then shown paddling down a river in a boat while a woman talks.",
+            "are driving the canoe, they go down the river flowing side to side.",
+            "sit in a canoe while the man paddles.",
+            "walking go down the rapids, while the man in his helicopter almost falls and goes out of canoehood."
+          ],
+          "ctx": "Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background. the child and a different man",
+          "ctx_a": "Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background.",
+          "ctx_b": "the child and a different man",
+          "endings": [
+            "are then shown paddling down a river in a boat while a woman talks.",
+            "are driving the canoe, they go down the river flowing side to side.",
+            "sit in a canoe while the man paddles.",
+            "walking go down the rapids, while the man in his helicopter almost falls and goes out of canoehood."
+          ],
+          "gold": 2,
+          "ind": 106,
+          "label": "2",
+          "query": "Canoeing: Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background. The child and a different man",
+          "source_id": "activitynet~v_-xQvJmC2jhk",
+          "split": "val",
+          "split_type": "indomain"
+        },
+        "doc_hash": "14dc9b1c3f03ef369e0e9976562d362f58e37cadb9bebf25ee5dabdc3ff6ad7d",
+        "doc_id": 2,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -39.75,
+            false
+          ],
+          [
+            -49.25,
+            false
+          ],
+          [
+            -22.875,
+            false
+          ],
+          [
+            -106.0,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "fe85f7beb5549c53ae662741c373d9e854aa42fc4c070ba4503a0ded863f2dfe",
+        "resps": [
+          [
+            [
+              -39.75,
+              false
+            ]
+          ],
+          [
+            [
+              -49.25,
+              false
+            ]
+          ],
+          [
+            [
+              -22.875,
+              false
+            ]
+          ],
+          [
+            [
+              -106.0,
+              false
+            ]
+          ]
+        ],
+        "target": 2,
+        "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+      },
+      {
+        "acc": 0.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "High jump: A boy is running down a track. The boy",
+            " runs into a car."
+          ],
+          [
+            "High jump: A boy is running down a track. The boy",
+            " gets in a mat."
+          ],
+          [
+            "High jump: A boy is running down a track. The boy",
+            " lifts his body above the height of a pole."
+          ],
+          [
+            "High jump: A boy is running down a track. The boy",
+            " stands on his hands and springs."
+          ]
+        ],
+        "doc": {
+          "activity_label": "High jump",
+          "choices": [
+            "runs into a car.",
+            "gets in a mat.",
+            "lifts his body above the height of a pole.",
+            "stands on his hands and springs."
+          ],
+          "ctx": "A boy is running down a track. the boy",
+          "ctx_a": "A boy is running down a track.",
+          "ctx_b": "the boy",
+          "endings": [
+            "runs into a car.",
+            "gets in a mat.",
+            "lifts his body above the height of a pole.",
+            "stands on his hands and springs."
+          ],
+          "gold": 2,
+          "ind": 114,
+          "label": "2",
+          "query": "High jump: A boy is running down a track. The boy",
+          "source_id": "activitynet~v_-zHX3Gdx6I4",
+          "split": "val",
+          "split_type": "zeroshot"
+        },
+        "doc_hash": "7a5346b1d9309aa52799e598a5ccbff33ccd8c18c1d1056da412389ea5bd9e8b",
+        "doc_id": 3,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -18.375,
+            false
+          ],
+          [
+            -23.375,
+            false
+          ],
+          [
+            -31.5,
+            false
+          ],
+          [
+            -23.375,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "a2df73697ab4570dea4ab99211b81e98edfa0a5615a9b83a38f48341c0734e80",
+        "resps": [
+          [
+            [
+              -18.375,
+              false
+            ]
+          ],
+          [
+            [
+              -23.375,
+              false
+            ]
+          ],
+          [
+            [
+              -31.5,
+              false
+            ]
+          ],
+          [
+            [
+              -23.375,
+              false
+            ]
+          ]
+        ],
+        "target": 2,
+        "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+      },
+      {
+        "acc": 1.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "High jump: The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat. The boy",
+            " turns his body around on the mat."
+          ],
+          [
+            "High jump: The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat. The boy",
+            " gets up from the mat."
+          ],
+          [
+            "High jump: The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat. The boy",
+            " continues to lift his body over the pole."
+          ],
+          [
+            "High jump: The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat. The boy",
+            " wiggles out of the mat."
+          ]
+        ],
+        "doc": {
+          "activity_label": "High jump",
+          "choices": [
+            "turns his body around on the mat.",
+            "gets up from the mat.",
+            "continues to lift his body over the pole.",
+            "wiggles out of the mat."
+          ],
+          "ctx": "The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat. the boy",
+          "ctx_a": "The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat.",
+          "ctx_b": "the boy",
+          "endings": [
+            "turns his body around on the mat.",
+            "gets up from the mat.",
+            "continues to lift his body over the pole.",
+            "wiggles out of the mat."
+          ],
+          "gold": 1,
+          "ind": 116,
+          "label": "1",
+          "query": "High jump: The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat. The boy",
+          "source_id": "activitynet~v_-zHX3Gdx6I4",
+          "split": "val",
+          "split_type": "zeroshot"
+        },
+        "doc_hash": "0ea20e56c00cb5efbd1db09b523ddfb3dca721b1e17d740270d39d0296ee621c",
+        "doc_id": 4,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -17.5,
+            false
+          ],
+          [
+            -14.0,
+            false
+          ],
+          [
+            -17.75,
+            false
+          ],
+          [
+            -19.25,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "8a1432f2aa0f0a07e3c133ac5c43561fc3849ada1e1c45066a6f13aa4ccac951",
+        "resps": [
+          [
+            [
+              -17.5,
+              false
+            ]
+          ],
+          [
+            [
+              -14.0,
+              false
+            ]
+          ],
+          [
+            [
+              -17.75,
+              false
+            ]
+          ],
+          [
+            [
+              -19.25,
+              false
+            ]
+          ]
+        ],
+        "target": 1,
+        "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      },
+      {
+        "acc": 0.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "High jump: The boy lands on his back on to a red mat. The boy gets up from the mat. The boy",
+            " starts doing spins."
+          ],
+          [
+            "High jump: The boy lands on his back on to a red mat. The boy gets up from the mat. The boy",
+            " celebrates by clapping and flexing both arms."
+          ],
+          [
+            "High jump: The boy lands on his back on to a red mat. The boy gets up from the mat. The boy",
+            " is dancing on the mat."
+          ],
+          [
+            "High jump: The boy lands on his back on to a red mat. The boy gets up from the mat. The boy",
+            " does jump jacks on his stick."
+          ]
+        ],
+        "doc": {
+          "activity_label": "High jump",
+          "choices": [
+            "starts doing spins.",
+            "celebrates by clapping and flexing both arms.",
+            "is dancing on the mat.",
+            "does jump jacks on his stick."
+          ],
+          "ctx": "The boy lands on his back on to a red mat. The boy gets up from the mat. the boy",
+          "ctx_a": "The boy lands on his back on to a red mat. The boy gets up from the mat.",
+          "ctx_b": "the boy",
+          "endings": [
+            "starts doing spins.",
+            "celebrates by clapping and flexing both arms.",
+            "is dancing on the mat.",
+            "does jump jacks on his stick."
+          ],
+          "gold": 1,
+          "ind": 117,
+          "label": "1",
+          "query": "High jump: The boy lands on his back on to a red mat. The boy gets up from the mat. The boy",
+          "source_id": "activitynet~v_-zHX3Gdx6I4",
+          "split": "val",
+          "split_type": "zeroshot"
+        },
+        "doc_hash": "c10764353478517efdd4ff86e98cae2843877ae3bff5e1af117d05e581340b96",
+        "doc_id": 5,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -18.625,
+            false
+          ],
+          [
+            -37.25,
+            false
+          ],
+          [
+            -14.9375,
+            false
+          ],
+          [
+            -33.25,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "b31af94ae9da048b8880edf3975c89966e1b43e56bbd9411fcb16783729c235c",
+        "resps": [
+          [
+            [
+              -18.625,
+              false
+            ]
+          ],
+          [
+            [
+              -37.25,
+              false
+            ]
+          ],
+          [
+            [
+              -14.9375,
+              false
+            ]
+          ],
+          [
+            [
+              -33.25,
+              false
+            ]
+          ]
+        ],
+        "target": 1,
+        "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      },
+      {
+        "acc": 0.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "Playing harmonica: A man is standing in front of a camera. He starts playing a harmonica for the camera. He",
+            " begins to play the harmonica with his body while looking at the camera."
+          ],
+          [
+            "Playing harmonica: A man is standing in front of a camera. He starts playing a harmonica for the camera. He",
+            " seems to be singing while playing the harmonica."
+          ],
+          [
+            "Playing harmonica: A man is standing in front of a camera. He starts playing a harmonica for the camera. He",
+            " rocks back and forth to the music as he goes."
+          ],
+          [
+            "Playing harmonica: A man is standing in front of a camera. He starts playing a harmonica for the camera. He",
+            " painted a fence in front of the camera."
+          ]
+        ],
+        "doc": {
+          "activity_label": "Playing harmonica",
+          "choices": [
+            "begins to play the harmonica with his body while looking at the camera.",
+            "seems to be singing while playing the harmonica.",
+            "rocks back and forth to the music as he goes.",
+            "painted a fence in front of the camera."
+          ],
+          "ctx": "A man is standing in front of a camera. He starts playing a harmonica for the camera. he",
+          "ctx_a": "A man is standing in front of a camera. He starts playing a harmonica for the camera.",
+          "ctx_b": "he",
+          "endings": [
+            "begins to play the harmonica with his body while looking at the camera.",
+            "seems to be singing while playing the harmonica.",
+            "rocks back and forth to the music as he goes.",
+            "painted a fence in front of the camera."
+          ],
+          "gold": 2,
+          "ind": 149,
+          "label": "2",
+          "query": "Playing harmonica: A man is standing in front of a camera. He starts playing a harmonica for the camera. He",
+          "source_id": "activitynet~v_0RUMAGGab1k",
+          "split": "val",
+          "split_type": "zeroshot"
+        },
+        "doc_hash": "cf8a9b3f0c6672e4f6502cc4bb4add452f8ea8a996a72179a69f28d2e2218d27",
+        "doc_id": 6,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -28.75,
+            false
+          ],
+          [
+            -15.625,
+            false
+          ],
+          [
+            -32.25,
+            false
+          ],
+          [
+            -32.25,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "2125cc80f3a2322cc77c38dce4e23d737b484e2170b182f8709e3832f548cc6d",
+        "resps": [
+          [
+            [
+              -28.75,
+              false
+            ]
+          ],
+          [
+            [
+              -15.625,
+              false
+            ]
+          ],
+          [
+            [
+              -32.25,
+              false
+            ]
+          ],
+          [
+            [
+              -32.25,
+              false
+            ]
+          ]
+        ],
+        "target": 2,
+        "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+      },
+      {
+        "acc": 0.0,
+        "acc_norm": 0.0,
+        "arguments": [
+          [
+            "Sumo: A cartoon animation video is shown with people wandering around and rockets being shot. Two men",
+            " fight robots of evil and ends with a to be continued."
+          ],
+          [
+            "Sumo: A cartoon animation video is shown with people wandering around and rockets being shot. Two men",
+            " are then shown in closeups shooting a shot put."
+          ],
+          [
+            "Sumo: A cartoon animation video is shown with people wandering around and rockets being shot. Two men",
+            " push a child in a speedboat in the water."
+          ],
+          [
+            "Sumo: A cartoon animation video is shown with people wandering around and rockets being shot. Two men",
+            " look in the cameraman's eye and smile."
+          ]
+        ],
+        "doc": {
+          "activity_label": "Sumo",
+          "choices": [
+            "fight robots of evil and ends with a to be continued.",
+            "are then shown in closeups shooting a shot put.",
+            "push a child in a speedboat in the water.",
+            "look in the cameraman's eye and smile."
+          ],
+          "ctx": "A cartoon animation video is shown with people wandering around and rockets being shot. two men",
+          "ctx_a": "A cartoon animation video is shown with people wandering around and rockets being shot.",
+          "ctx_b": "two men",
+          "endings": [
+            "fight robots of evil and ends with a to be continued.",
+            "are then shown in closeups shooting a shot put.",
+            "push a child in a speedboat in the water.",
+            "look in the cameraman's eye and smile."
+          ],
+          "gold": 0,
+          "ind": 170,
+          "label": "0",
+          "query": "Sumo: A cartoon animation video is shown with people wandering around and rockets being shot. Two men",
+          "source_id": "activitynet~v_0WVkoTBmhA0",
+          "split": "val",
+          "split_type": "indomain"
+        },
+        "doc_hash": "484959f4cb60c490dfc7ae2431a4fc70b81f0784109e5626ff465f3ce22430b6",
+        "doc_id": 7,
+        "filter": "none",
+        "filtered_resps": [
+          [
+            -65.5,
+            false
+          ],
+          [
+            -40.0,
+            false
+          ],
+          [
+            -33.75,
+            false
+          ],
+          [
+            -33.5,
+            false
+          ]
+        ],
+        "metrics": [
+          "acc",
+          "acc_norm"
+        ],
+        "prompt_hash": "18d0f3b52cea323e10cb807c98f1d19817a68167d4364461b1f8c7a4b4b57a5d",
+        "resps": [
+          [
+            [
+              -65.5,
+              false
+            ]
+          ],
+          [
+            [
+              -40.0,
+              false
+            ]
+          ],
+          [
+            [
+              -33.75,
+              false
+            ]
+          ],
+          [
+            [
+              -33.5,
+              false
+            ]
+          ]
+        ],
+        "target": 0,
+        "target_hash": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    ]
+  },
+  "tokenizer_bos_token": [
+    null,
+    "None"
+  ],
+  "tokenizer_eos_token": [
+    "<|im_end|>",
+    "151645"
+  ],
+  "tokenizer_pad_token": [
+    "<|endoftext|>",
+    "151643"
+  ],
+  "transformers_version": "5.17.0",
+  "upper_git_hash": null,
+  "versions": {
+    "hellaswag": 1.0
+  }
+}

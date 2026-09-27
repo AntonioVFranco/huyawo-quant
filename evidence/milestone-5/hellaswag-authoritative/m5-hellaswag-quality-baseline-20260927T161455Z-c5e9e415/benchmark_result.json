@@ -1,0 +1,41 @@
+{
+  "evaluation_profile": {
+    "benchmark": "lm-evaluation-harness",
+    "benchmark_version": "0.4.13",
+    "metrics": [
+      "acc",
+      "acc_norm"
+    ],
+    "sample_limit": null,
+    "seed": 42,
+    "tasks": [
+      "hellaswag"
+    ]
+  },
+  "metrics": [
+    {
+      "aggregate": 0.40619398526190004,
+      "aggregation": "mean",
+      "direction": "higher_is_better",
+      "name": "acc",
+      "observations": [
+        0.40619398526190004
+      ],
+      "scope": "hellaswag",
+      "unit": "ratio"
+    },
+    {
+      "aggregate": 0.5243975303724357,
+      "aggregation": "mean",
+      "direction": "higher_is_better",
+      "name": "acc_norm",
+      "observations": [
+        0.5243975303724357
+      ],
+      "scope": "hellaswag",
+      "unit": "ratio"
+    }
+  ],
+  "result_kind": "quality",
+  "workload_profile": null
+}

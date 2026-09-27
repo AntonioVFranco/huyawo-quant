@@ -1,0 +1,9 @@
+{
+  "authoritative": true,
+  "elapsed_seconds": 1297.1240720534697,
+  "finished_at": "2026-09-27T17:43:08.481935Z",
+  "run_id": "m5-hellaswag-quality-baseline-20260927T161455Z-c5e9e415",
+  "simple_evaluate_returned": true,
+  "started_at": "2026-09-27T17:21:31.349113Z",
+  "status": "SUCCESS"
+}

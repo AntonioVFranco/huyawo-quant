@@ -1,0 +1,59 @@
+{
+  "artifact_kind": "benchmark_result_projection",
+  "benchmark_code_under_test_commit": "c5e9e415f21a13fcdc41d3dd9f2acbfc3d4ec428",
+  "created_at": "2026-09-27T22:49:40.155247+00:00",
+  "execution_boundary": {
+    "benchmark_rerun": false,
+    "dataset_load_executed": false,
+    "model_load_executed": false,
+    "simple_evaluate_executed": false
+  },
+  "gate": 11,
+  "historical_postrun_checksum": {
+    "member_count": 11,
+    "path": "POSTRUN_SHA256SUMS",
+    "preserved_byte_for_byte": true,
+    "sha256": "43fc8abd1bbad107a4af98243fd2a917046feccda6ccc898ba42f428b1b2d557"
+  },
+  "normalized_result": {
+    "metrics": [
+      {
+        "aggregate": 0.40619398526190004,
+        "name": "acc",
+        "scope": "hellaswag"
+      },
+      {
+        "aggregate": 0.5243975303724357,
+        "name": "acc_norm",
+        "scope": "hellaswag"
+      }
+    ],
+    "path": "benchmark_result.json",
+    "result_kind": "quality",
+    "sha256": "aea388dd645265bc79cebf7dadf51b306f0998e3cd1061e6f1e87235b7ca4326"
+  },
+  "projector_source": {
+    "path": "huyawo_quant/evaluation/lm_eval.py",
+    "sha256": "3efc380d36277293ec96fb07d9eb32f1060a7f0930702b518f733fb6b87c1ad6"
+  },
+  "projector_state": "validated_uncommitted_worktree",
+  "projector_test": {
+    "path": "tests/evaluation/test_lm_eval.py",
+    "sha256": "7fb8f1d137be2f5ae7ecc36477aedf5ddedd9c4c1e659ed5b4b9f6004e9872f1"
+  },
+  "raw_result": {
+    "lm_eval_version": "0.4.13",
+    "path": "simple_evaluate_result.json",
+    "sample_count": 10042,
+    "sha256": "3ae0d56f962bdc557094a7d4ae636049db9b926dc32aaec01de541658adf6b39"
+  },
+  "repository_head_at_projection": "9fa703bb3b4ea08fa7a6ff7824dc98b8388dd2a4",
+  "returned_seed_schema": {
+    "fewshot_seed": 42,
+    "numpy_seed": 42,
+    "random_seed": 42,
+    "torch_seed": 42
+  },
+  "run_id": "m5-hellaswag-quality-baseline-20260927T161455Z-c5e9e415",
+  "schema_version": "1"
+}

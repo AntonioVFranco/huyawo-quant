@@ -489,9 +489,9 @@ def _authoritative_lm_eval_result(
             "device": "cuda:0",
             "limit": None,
             "random_seed": 42,
-            "numpy_random_seed": 42,
-            "torch_random_seed": 42,
-            "fewshot_random_seed": 42,
+            "numpy_seed": 42,
+            "torch_seed": 42,
+            "fewshot_seed": 42,
         },
         "n-samples": {
             "hellaswag": {

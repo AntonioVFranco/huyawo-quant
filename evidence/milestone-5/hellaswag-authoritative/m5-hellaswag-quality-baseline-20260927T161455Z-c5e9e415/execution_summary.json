@@ -1,0 +1,38 @@
+{
+  "acc": 0.40619398526190004,
+  "acc_norm": 0.5243975303724357,
+  "allocated_before_bytes": 0,
+  "authoritative": true,
+  "benchmark": "lm-evaluation-harness",
+  "benchmark_version": "0.4.13",
+  "code_under_test_commit": "c5e9e415f21a13fcdc41d3dd9f2acbfc3d4ec428",
+  "dataset_revision": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+  "elapsed_seconds": 1297.1240720534697,
+  "execution_count": 1,
+  "finished_at": "2026-09-27T17:43:08.481935Z",
+  "gpu_name": "NVIDIA RTX A5000",
+  "gpu_peak_memory_allocated_bytes": 1128785920,
+  "gpu_uuid": "GPU-e515248b-e106-bb71-e4cb-54155f0346e8",
+  "hellaswag_metric_keys": [
+    "acc,none",
+    "acc_norm,none",
+    "acc_norm_stderr,none",
+    "acc_stderr,none",
+    "alias",
+    "name",
+    "sample_len"
+  ],
+  "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "n_samples_raw": {
+    "hellaswag": {
+      "effective": 10042,
+      "original": 10042
+    }
+  },
+  "repository_head": "9fa703bb3b4ea08fa7a6ff7824dc98b8388dd2a4",
+  "retry_allowed": false,
+  "run_id": "m5-hellaswag-quality-baseline-20260927T161455Z-c5e9e415",
+  "sample_count": 10042,
+  "started_at": "2026-09-27T17:21:31.349113Z",
+  "status": "SUCCESS"
+}

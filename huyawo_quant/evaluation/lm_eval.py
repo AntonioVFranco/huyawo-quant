@@ -496,9 +496,9 @@ def build_hellaswag_benchmark_result(
         "device": _EXPECTED_DEVICE,
         "limit": None,
         "random_seed": _EXPECTED_SEED,
-        "numpy_random_seed": _EXPECTED_SEED,
-        "torch_random_seed": _EXPECTED_SEED,
-        "fewshot_random_seed": _EXPECTED_SEED,
+        "numpy_seed": _EXPECTED_SEED,
+        "torch_seed": _EXPECTED_SEED,
+        "fewshot_seed": _EXPECTED_SEED,
     }
 
     for field_name, expected in expected_config.items():

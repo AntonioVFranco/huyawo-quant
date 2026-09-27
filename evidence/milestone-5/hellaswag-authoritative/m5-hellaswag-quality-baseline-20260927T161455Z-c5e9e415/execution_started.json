@@ -1,0 +1,14 @@
+{
+  "authoritative": true,
+  "benchmark": "lm-evaluation-harness",
+  "benchmark_version": "0.4.13",
+  "code_under_test_commit": "c5e9e415f21a13fcdc41d3dd9f2acbfc3d4ec428",
+  "execution_boundary": "immediately_before_simple_evaluate",
+  "execution_count": 1,
+  "preexecution_checkpoint_commit": "9fa703bb3b4ea08fa7a6ff7824dc98b8388dd2a4",
+  "retry_policy": "no_automatic_retry",
+  "run_id": "m5-hellaswag-quality-baseline-20260927T161455Z-c5e9e415",
+  "simple_evaluate_call_committed": true,
+  "simple_evaluate_call_sequence": 1,
+  "started_at": "2026-09-27T17:21:31.349113Z"
+}

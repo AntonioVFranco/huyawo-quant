@@ -10,7 +10,12 @@ from typing import cast
 
 from lm_eval.tasks._yaml_loader import load_yaml  # type: ignore[import-untyped]
 
-from huyawo_quant.contracts import DatasetIdentity, EvaluationProfile
+from huyawo_quant.contracts import (
+    DatasetIdentity,
+    EvaluationProfile,
+    ModelIdentity,
+    TokenizerIdentity,
+)
 
 _EXPECTED_LM_EVAL_VERSION = "0.4.13"
 _EXPECTED_TASK = "hellaswag"
@@ -188,3 +193,113 @@ def build_hellaswag_task_config(
     task_config["num_fewshot"] = 0
 
     return task_config
+
+
+_EXPECTED_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+_EXPECTED_TOKENIZER_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+_EXPECTED_MODEL_REVISION = "7ae557604adf67be50417f59c2c2f167def9a775"
+_EXPECTED_DTYPE = "bfloat16"
+_EXPECTED_DEVICE = "cuda:0"
+_EXPECTED_BATCH_SIZE = 1
+_EXPECTED_SEED = 42
+_EXPECTED_USE_FAST_TOKENIZER = True
+
+
+def _validate_model_identity(
+    model_identity: ModelIdentity,
+) -> None:
+    if not isinstance(model_identity, ModelIdentity):
+        raise TypeError("model_identity must be a ModelIdentity")
+
+    if model_identity.model_id != _EXPECTED_MODEL_ID:
+        raise ValueError("model_identity must target Qwen/Qwen2.5-0.5B-Instruct")
+
+    if model_identity.resolved_revision != _EXPECTED_MODEL_REVISION:
+        raise ValueError(
+            "model_identity resolved_revision must match the accepted immutable model revision"
+        )
+
+
+def _validate_tokenizer_identity(
+    tokenizer_identity: TokenizerIdentity,
+) -> None:
+    if not isinstance(
+        tokenizer_identity,
+        TokenizerIdentity,
+    ):
+        raise TypeError("tokenizer_identity must be a TokenizerIdentity")
+
+    if tokenizer_identity.tokenizer_id != _EXPECTED_TOKENIZER_ID:
+        raise ValueError("tokenizer_identity must target Qwen/Qwen2.5-0.5B-Instruct")
+
+    if tokenizer_identity.resolved_revision != _EXPECTED_MODEL_REVISION:
+        raise ValueError(
+            "tokenizer_identity resolved_revision must match "
+            "the accepted immutable tokenizer revision"
+        )
+
+
+def _validate_evaluation_limit(
+    limit: int | None,
+) -> None:
+    if limit is None:
+        return
+
+    if type(limit) is not int or limit <= 0:
+        raise ValueError(
+            "limit must be None for authoritative evaluation "
+            "or a positive integer for smoke evaluation"
+        )
+
+
+def build_hellaswag_model_args(
+    model_identity: ModelIdentity,
+    tokenizer_identity: TokenizerIdentity,
+) -> dict[str, str | int | float | bool]:
+    """Build deterministic HFLM arguments for the accepted quality baseline."""
+    _validate_model_identity(model_identity)
+    _validate_tokenizer_identity(tokenizer_identity)
+
+    return {
+        "pretrained": model_identity.model_id,
+        "revision": model_identity.resolved_revision,
+        "tokenizer": tokenizer_identity.tokenizer_id,
+        "dtype": _EXPECTED_DTYPE,
+        "trust_remote_code": False,
+        "use_fast_tokenizer": _EXPECTED_USE_FAST_TOKENIZER,
+    }
+
+
+def build_hellaswag_simple_evaluate_kwargs(
+    model_identity: ModelIdentity,
+    tokenizer_identity: TokenizerIdentity,
+    dataset_identity: DatasetIdentity,
+    *,
+    limit: int | None = None,
+) -> dict[str, object]:
+    """Build deterministic simple_evaluate kwargs without executing evaluation."""
+    _validate_evaluation_limit(limit)
+
+    model_args = build_hellaswag_model_args(
+        model_identity,
+        tokenizer_identity,
+    )
+
+    task_config = build_hellaswag_task_config(dataset_identity)
+
+    return {
+        "model": "hf",
+        "model_args": model_args,
+        "tasks": [task_config],
+        "num_fewshot": 0,
+        "batch_size": _EXPECTED_BATCH_SIZE,
+        "device": _EXPECTED_DEVICE,
+        "limit": limit,
+        "log_samples": True,
+        "apply_chat_template": False,
+        "predict_only": False,
+        "random_seed": _EXPECTED_SEED,
+        "numpy_random_seed": _EXPECTED_SEED,
+        "torch_random_seed": _EXPECTED_SEED,
+        "fewshot_random_seed": _EXPECTED_SEED,
+    }

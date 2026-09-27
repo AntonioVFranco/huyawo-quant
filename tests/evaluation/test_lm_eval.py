@@ -6,12 +6,20 @@ from typing import cast
 
 import huyawo_quant.evaluation.lm_eval as lm_eval_adapter
 import pytest
-from huyawo_quant.contracts import DatasetIdentity, EvaluationProfile
+from huyawo_quant.contracts import (
+    DatasetIdentity,
+    EvaluationProfile,
+    ModelIdentity,
+    TokenizerIdentity,
+)
 from huyawo_quant.evaluation import (
     build_hellaswag_evaluation_profile,
+    build_hellaswag_model_args,
+    build_hellaswag_simple_evaluate_kwargs,
     build_hellaswag_task_config,
 )
 
+_MODEL_SHA = "7ae557604adf67be50417f59c2c2f167def9a775"
 _DATASET_SHA = "218ec52e09a7e7462a5400043bb9a69a41d06b76"
 
 
@@ -205,3 +213,203 @@ def test_adapter_fails_closed_on_native_task_semantic_drift(
         match="Unexpected native HellaSwag configuration",
     ):
         build_hellaswag_evaluation_profile()
+
+
+def _model_identity(
+    *,
+    model_id: str = "Qwen/Qwen2.5-0.5B-Instruct",
+    resolved_revision: str = _MODEL_SHA,
+) -> ModelIdentity:
+    return ModelIdentity(
+        model_id=model_id,
+        requested_revision="main",
+        resolved_revision=resolved_revision,
+    )
+
+
+def _tokenizer_identity(
+    *,
+    tokenizer_id: str = "Qwen/Qwen2.5-0.5B-Instruct",
+    resolved_revision: str = _MODEL_SHA,
+) -> TokenizerIdentity:
+    return TokenizerIdentity(
+        tokenizer_id=tokenizer_id,
+        requested_revision="main",
+        resolved_revision=resolved_revision,
+    )
+
+
+def test_build_hellaswag_model_args_matches_accepted_protocol() -> None:
+    model_args = build_hellaswag_model_args(
+        _model_identity(),
+        _tokenizer_identity(),
+    )
+
+    assert model_args == {
+        "pretrained": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": _MODEL_SHA,
+        "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+        "dtype": "bfloat16",
+        "trust_remote_code": False,
+        "use_fast_tokenizer": True,
+    }
+
+
+def test_build_simple_evaluate_kwargs_matches_authoritative_protocol() -> None:
+    kwargs = build_hellaswag_simple_evaluate_kwargs(
+        _model_identity(),
+        _tokenizer_identity(),
+        _dataset_identity(),
+    )
+
+    assert set(kwargs) == {
+        "model",
+        "model_args",
+        "tasks",
+        "num_fewshot",
+        "batch_size",
+        "device",
+        "limit",
+        "log_samples",
+        "apply_chat_template",
+        "predict_only",
+        "random_seed",
+        "numpy_random_seed",
+        "torch_random_seed",
+        "fewshot_random_seed",
+    }
+
+    assert kwargs["model"] == "hf"
+    assert kwargs["model_args"] == {
+        "pretrained": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": _MODEL_SHA,
+        "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+        "dtype": "bfloat16",
+        "trust_remote_code": False,
+        "use_fast_tokenizer": True,
+    }
+
+    tasks = cast(
+        list[dict[str, object]],
+        kwargs["tasks"],
+    )
+
+    assert len(tasks) == 1
+    assert tasks[0]["task"] == "hellaswag"
+    assert tasks[0]["dataset_kwargs"] == {
+        "revision": _DATASET_SHA,
+    }
+    assert tasks[0]["num_fewshot"] == 0
+
+    assert kwargs["num_fewshot"] == 0
+    assert kwargs["batch_size"] == 1
+    assert kwargs["device"] == "cuda:0"
+    assert kwargs["limit"] is None
+    assert kwargs["log_samples"] is True
+    assert kwargs["apply_chat_template"] is False
+    assert kwargs["predict_only"] is False
+    assert kwargs["random_seed"] == 42
+    assert kwargs["numpy_random_seed"] == 42
+    assert kwargs["torch_random_seed"] == 42
+    assert kwargs["fewshot_random_seed"] == 42
+    assert "output_path" not in kwargs
+
+
+def test_build_simple_evaluate_kwargs_accepts_positive_smoke_limit() -> None:
+    kwargs = build_hellaswag_simple_evaluate_kwargs(
+        _model_identity(),
+        _tokenizer_identity(),
+        _dataset_identity(),
+        limit=8,
+    )
+
+    assert kwargs["limit"] == 8
+
+
+@pytest.mark.parametrize(
+    "limit",
+    [
+        0,
+        -1,
+        cast(int, True),
+    ],
+)
+def test_build_simple_evaluate_kwargs_rejects_invalid_smoke_limit(
+    limit: int,
+) -> None:
+    with pytest.raises(
+        ValueError,
+        match="positive integer",
+    ):
+        build_hellaswag_simple_evaluate_kwargs(
+            _model_identity(),
+            _tokenizer_identity(),
+            _dataset_identity(),
+            limit=limit,
+        )
+
+
+@pytest.mark.parametrize(
+    ("model_id", "resolved_revision", "message"),
+    [
+        (
+            "other/model",
+            _MODEL_SHA,
+            "must target Qwen/Qwen2.5-0.5B-Instruct",
+        ),
+        (
+            "Qwen/Qwen2.5-0.5B-Instruct",
+            "a" * 40,
+            "accepted immutable model revision",
+        ),
+    ],
+)
+def test_model_args_rejects_wrong_model_identity(
+    model_id: str,
+    resolved_revision: str,
+    message: str,
+) -> None:
+    with pytest.raises(
+        ValueError,
+        match=message,
+    ):
+        build_hellaswag_model_args(
+            _model_identity(
+                model_id=model_id,
+                resolved_revision=resolved_revision,
+            ),
+            _tokenizer_identity(),
+        )
+
+
+@pytest.mark.parametrize(
+    ("tokenizer_id", "resolved_revision", "message"),
+    [
+        (
+            "other/tokenizer",
+            _MODEL_SHA,
+            "must target Qwen/Qwen2.5-0.5B-Instruct",
+        ),
+        (
+            "Qwen/Qwen2.5-0.5B-Instruct",
+            "a" * 40,
+            "accepted immutable tokenizer revision",
+        ),
+    ],
+)
+def test_model_args_rejects_wrong_tokenizer_identity(
+    tokenizer_id: str,
+    resolved_revision: str,
+    message: str,
+) -> None:
+    with pytest.raises(
+        ValueError,
+        match=message,
+    ):
+        build_hellaswag_model_args(
+            _model_identity(),
+            _tokenizer_identity(
+                tokenizer_id=tokenizer_id,
+                resolved_revision=resolved_revision,
+            ),
+        )

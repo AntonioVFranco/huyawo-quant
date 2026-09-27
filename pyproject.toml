@@ -38,3 +38,8 @@ python_version = "3.12"
 strict = true
 warn_unused_configs = true
 files = ["huyawo_quant", "tests"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["huyawo_quant*"]
+namespaces = false

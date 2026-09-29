@@ -118,12 +118,14 @@ def test_invalid_prompt_handoff_fails_closed(
         streamer.put(value)
 
 
-def test_invalid_generated_token_shape_fails_closed() -> None:
+def test_invalid_generated_token_shape_reads_clock_before_rejection() -> None:
+    timestamps = _clock([110])
+
     streamer = TokenTimingStreamer(
         generation_start_ns=100,
         expected_prompt_tokens=4,
         expected_generated_tokens=1,
-        clock_ns=_clock([110]).__next__,
+        clock_ns=timestamps.__next__,
     )
 
     streamer.put(_prompt())
@@ -134,9 +136,40 @@ def test_invalid_generated_token_shape_fails_closed() -> None:
     ):
         streamer.put(torch.tensor([[1]], dtype=torch.long))
 
+    with pytest.raises(StopIteration):
+        next(timestamps)
 
-def test_extra_generated_token_callback_fails_before_clock_read() -> None:
+    assert streamer.generated_token_count == 0
+    assert streamer.generated_token_timestamps_ns == ()
+
+
+def test_invalid_generated_token_type_reads_clock_before_rejection() -> None:
     timestamps = _clock([110])
+
+    streamer = TokenTimingStreamer(
+        generation_start_ns=100,
+        expected_prompt_tokens=4,
+        expected_generated_tokens=1,
+        clock_ns=timestamps.__next__,
+    )
+
+    streamer.put(_prompt())
+
+    with pytest.raises(
+        TypeError,
+        match="Streamer callbacks must provide torch.Tensor values",
+    ):
+        streamer.put(object())
+
+    with pytest.raises(StopIteration):
+        next(timestamps)
+
+    assert streamer.generated_token_count == 0
+    assert streamer.generated_token_timestamps_ns == ()
+
+
+def test_extra_generated_token_callback_reads_clock_before_rejection() -> None:
+    timestamps = _clock([110, 120])
 
     streamer = TokenTimingStreamer(
         generation_start_ns=100,
@@ -153,6 +186,12 @@ def test_extra_generated_token_callback_fails_before_clock_read() -> None:
         match="more generated-token callbacks than expected",
     ):
         streamer.put(_token(2))
+
+    with pytest.raises(StopIteration):
+        next(timestamps)
+
+    assert streamer.generated_token_count == 1
+    assert streamer.generated_token_timestamps_ns == (110,)
 
 
 def test_end_requires_exact_generated_token_count() -> None:

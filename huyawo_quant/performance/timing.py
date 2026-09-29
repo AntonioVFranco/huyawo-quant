@@ -97,20 +97,24 @@ class TokenTimingStreamer(BaseStreamer):
         if self._ended:
             raise RuntimeError("Cannot accept token callbacks after end()")
 
-        if not isinstance(value, torch.Tensor):
-            raise TypeError("Streamer callbacks must provide torch.Tensor values")
-
         if not self._prompt_handoff_seen:
+            if not isinstance(value, torch.Tensor):
+                raise TypeError("Streamer callbacks must provide torch.Tensor values")
+
             self._validate_prompt_handoff(value)
             self._prompt_handoff_seen = True
             return
+
+        timestamp_ns = self._read_clock_ns()
+
+        if not isinstance(value, torch.Tensor):
+            raise TypeError("Streamer callbacks must provide torch.Tensor values")
 
         self._validate_generated_token_event(value)
 
         if self.generated_token_count >= self._expected_generated_tokens:
             raise RuntimeError("Received more generated-token callbacks than expected")
 
-        timestamp_ns = self._read_clock_ns()
         self._generated_token_timestamps_ns.append(timestamp_ns)
 
     def end(self) -> None:

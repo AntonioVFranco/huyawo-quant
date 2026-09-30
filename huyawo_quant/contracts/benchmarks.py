@@ -101,9 +101,4 @@ class BenchmarkResult(ContractModel):
         if len(identities) != len(set(identities)):
             raise ValueError("benchmark metric identities must be unique")
 
-        if identities != tuple(sorted(identities)):
-            raise ValueError(
-                "benchmark metrics must be ordered lexicographically by scope and name"
-            )
-
         return self

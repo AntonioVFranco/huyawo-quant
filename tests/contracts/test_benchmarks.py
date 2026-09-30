@@ -319,22 +319,23 @@ def test_benchmark_result_rejects_duplicate_metric_identities() -> None:
         )
 
 
-def test_benchmark_result_rejects_unsorted_metrics() -> None:
-    with pytest.raises(ValidationError):
-        BenchmarkResult(
-            result_kind="quality",
-            evaluation_profile=make_evaluation_profile(),
-            metrics=(
-                make_metric(
-                    name="z_metric",
-                    scope="hellaswag",
-                ),
-                make_metric(
-                    name="a_metric",
-                    scope="hellaswag",
-                ),
-            ),
-        )
+def test_benchmark_result_preserves_protocol_defined_metric_order() -> None:
+    metrics = (
+        make_metric(name="z_metric", scope="hellaswag"),
+        make_metric(name="a_metric", scope="hellaswag"),
+    )
+
+    result = BenchmarkResult(
+        result_kind="quality", evaluation_profile=make_evaluation_profile(), metrics=metrics
+    )
+
+    assert result.metrics == metrics
+
+    python_round_trip = BenchmarkResult.model_validate(result.model_dump(mode="python"))
+    assert python_round_trip == result
+
+    json_round_trip = BenchmarkResult.model_validate_json(result.model_dump_json())
+    assert json_round_trip == result
 
 
 def test_benchmark_result_accepts_sorted_metrics() -> None:

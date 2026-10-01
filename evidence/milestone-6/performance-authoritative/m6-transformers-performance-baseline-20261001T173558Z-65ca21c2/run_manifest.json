@@ -1,0 +1,112 @@
+{
+  "authoritative": true,
+  "baseline_dtype": "bfloat16",
+  "created_at": "2026-10-01T17:35:58+00:00",
+  "environment_fingerprint_sha256": "b8e6e17561f500885adeaf2f10595306474daac349fed682bef8eb0fde567292",
+  "generation_configuration": {
+    "custom_stopping_criteria": false,
+    "kwargs": {
+      "do_sample": false,
+      "max_new_tokens": 64,
+      "min_new_tokens": 64,
+      "num_beams": 1,
+      "use_cache": true
+    },
+    "model_eval": true,
+    "required_generated_token_count": 64,
+    "seed": 42,
+    "torch_inference_mode": true
+  },
+  "hardware_target": {
+    "accelerator": "cuda",
+    "compute_capability_major": 8,
+    "compute_capability_minor": 6,
+    "device_count": 1,
+    "device_name": "NVIDIA RTX A4500",
+    "memory_bytes_per_device": 21464350720,
+    "vendor": "nvidia"
+  },
+  "measured_runs": 10,
+  "metric_definitions": [
+    {
+      "aggregation": "median",
+      "direction": "lower_is_better",
+      "expected_observation_count": 10,
+      "metric_id": "generation/e2e_latency_seconds",
+      "unit": "seconds"
+    },
+    {
+      "aggregation": "median",
+      "direction": "lower_is_better",
+      "expected_observation_count": 10,
+      "metric_id": "generation/ttft_seconds",
+      "unit": "seconds"
+    },
+    {
+      "aggregation": "median",
+      "direction": "lower_is_better",
+      "expected_observation_count": 10,
+      "metric_id": "generation/inter_token_latency_seconds",
+      "unit": "seconds"
+    },
+    {
+      "aggregation": "median",
+      "direction": "higher_is_better",
+      "expected_observation_count": 10,
+      "metric_id": "generation/output_throughput_tokens_per_second",
+      "unit": "tokens/second"
+    },
+    {
+      "aggregation": "last",
+      "direction": "lower_is_better",
+      "expected_observation_count": 1,
+      "metric_id": "memory/torch_allocated_vram_bytes",
+      "unit": "bytes"
+    },
+    {
+      "aggregation": "max",
+      "direction": "lower_is_better",
+      "expected_observation_count": 10,
+      "metric_id": "memory/torch_peak_allocated_vram_bytes",
+      "unit": "bytes"
+    }
+  ],
+  "model_identity": {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "resolved_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "source": "huggingface"
+  },
+  "prompt_fixture": {
+    "add_special_tokens": false,
+    "fixture_id": "huyawo_quant.performance.protocol.PERFORMANCE_PROMPT_TEXT",
+    "token_count": 256,
+    "token_ids_sha256": "2b8da9873245ddff9a8d67e3eb2c7faa9e5274e7a22b0d20a8d185534aa0c585"
+  },
+  "purpose": "performance_baseline",
+  "quant_version": "0.0.0",
+  "repository_commit": "65ca21c2578cf6d15ec6d2e91b1573c6995389ab",
+  "run_id": "m6-transformers-performance-baseline-20261001T173558Z-65ca21c2",
+  "run_kind": "baseline",
+  "runtime_target": {
+    "runtime": "transformers",
+    "version": "5.17.0"
+  },
+  "schema_version": "1",
+  "tokenizer_identity": {
+    "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "resolved_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "source": "huggingface",
+    "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct"
+  },
+  "warmup_runs": 3,
+  "workload_id": "interactive_256_64_b1_c1_v1",
+  "workload_profile": {
+    "batch_size": 1,
+    "concurrency": 1,
+    "measured_runs": 10,
+    "output_tokens": 64,
+    "prompt_tokens": 256,
+    "warmup_runs": 3
+  }
+}

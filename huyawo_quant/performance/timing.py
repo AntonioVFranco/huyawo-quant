@@ -28,14 +28,18 @@ class TokenTimingStreamer(BaseStreamer):
     def __init__(
         self,
         *,
-        generation_start_ns: int,
+        generation_start_ns: int | None,
         expected_prompt_tokens: int,
         expected_generated_tokens: int,
         clock_ns: ClockNs = perf_counter_ns,
     ) -> None:
-        self._generation_start_ns = _require_non_negative_int(
-            generation_start_ns,
-            name="generation_start_ns",
+        self._generation_start_ns = (
+            None
+            if generation_start_ns is None
+            else _require_non_negative_int(
+                generation_start_ns,
+                name="generation_start_ns",
+            )
         )
         self._expected_prompt_tokens = _require_positive_int(
             expected_prompt_tokens,
@@ -56,7 +60,19 @@ class TokenTimingStreamer(BaseStreamer):
 
     @property
     def generation_start_ns(self) -> int:
-        return self._generation_start_ns
+        return self._require_generation_start_ns()
+
+    def bind_generation_start_ns(self, generation_start_ns: int) -> None:
+        if self._generation_start_ns is not None:
+            raise RuntimeError("Generation start timestamp is already bound")
+
+        if self._prompt_handoff_seen or self._generated_token_timestamps_ns or self._ended:
+            raise RuntimeError("Generation start timestamp must be bound before token callbacks")
+
+        self._generation_start_ns = _require_non_negative_int(
+            generation_start_ns,
+            name="generation_start_ns",
+        )
 
     @property
     def prompt_handoff_seen(self) -> bool:
@@ -79,7 +95,7 @@ class TokenTimingStreamer(BaseStreamer):
         if not self._generated_token_timestamps_ns:
             raise RuntimeError("TTFT is unavailable before the first generated-token callback")
 
-        return self._generated_token_timestamps_ns[0] - self._generation_start_ns
+        return self._generated_token_timestamps_ns[0] - self.generation_start_ns
 
     @property
     def inter_token_intervals_ns(self) -> tuple[int, ...]:
@@ -96,6 +112,8 @@ class TokenTimingStreamer(BaseStreamer):
     def put(self, value: Any) -> None:
         if self._ended:
             raise RuntimeError("Cannot accept token callbacks after end()")
+
+        self._require_generation_start_ns()
 
         if not self._prompt_handoff_seen:
             if not isinstance(value, torch.Tensor):
@@ -166,13 +184,20 @@ class TokenTimingStreamer(BaseStreamer):
         if value.dtype != torch.long:
             raise ValueError("Streamer callback tensors must use torch.long")
 
+    def _require_generation_start_ns(self) -> int:
+        if self._generation_start_ns is None:
+            raise RuntimeError("Generation start timestamp is not bound")
+
+        return self._generation_start_ns
+
     def _read_clock_ns(self) -> int:
         value = self._clock_ns()
+        generation_start_ns = self._require_generation_start_ns()
 
         if isinstance(value, bool) or not isinstance(value, int):
             raise RuntimeError("clock_ns must return an integer nanosecond timestamp")
 
-        if value < self._generation_start_ns:
+        if value < generation_start_ns:
             raise RuntimeError("Generated-token timestamp precedes generation start")
 
         if self._generated_token_timestamps_ns and value < self._generated_token_timestamps_ns[-1]:

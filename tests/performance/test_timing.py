@@ -343,3 +343,78 @@ def test_invalid_constructor_integer_boundaries_fail_closed(
 
     with pytest.raises(ValueError):
         TokenTimingStreamer(**kwargs)
+
+
+def test_deferred_generation_start_binding_preserves_timing_semantics() -> None:
+    timestamps = iter((125,))
+
+    streamer = TokenTimingStreamer(
+        generation_start_ns=None,
+        expected_prompt_tokens=2,
+        expected_generated_tokens=1,
+        clock_ns=lambda: next(timestamps),
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="Generation start timestamp is not bound",
+    ):
+        _ = streamer.generation_start_ns
+
+    streamer.bind_generation_start_ns(100)
+
+    streamer.put(torch.tensor([[10, 11]], dtype=torch.long))
+    streamer.put(torch.tensor([12], dtype=torch.long))
+    streamer.end()
+
+    assert streamer.generation_start_ns == 100
+    assert streamer.prompt_handoff_seen is True
+    assert streamer.ended is True
+    assert streamer.generated_token_count == 1
+    assert streamer.generated_token_timestamps_ns == (125,)
+    assert streamer.ttft_ns == 25
+    assert streamer.inter_token_intervals_ns == ()
+
+
+def test_deferred_generation_start_must_be_bound_before_callbacks() -> None:
+    streamer = TokenTimingStreamer(
+        generation_start_ns=None,
+        expected_prompt_tokens=2,
+        expected_generated_tokens=1,
+        clock_ns=lambda: 125,
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="Generation start timestamp is not bound",
+    ):
+        streamer.put(torch.tensor([[10, 11]], dtype=torch.long))
+
+
+def test_generation_start_binding_is_single_assignment() -> None:
+    deferred = TokenTimingStreamer(
+        generation_start_ns=None,
+        expected_prompt_tokens=2,
+        expected_generated_tokens=1,
+        clock_ns=lambda: 125,
+    )
+    deferred.bind_generation_start_ns(100)
+
+    with pytest.raises(
+        RuntimeError,
+        match="Generation start timestamp is already bound",
+    ):
+        deferred.bind_generation_start_ns(101)
+
+    direct = TokenTimingStreamer(
+        generation_start_ns=100,
+        expected_prompt_tokens=2,
+        expected_generated_tokens=1,
+        clock_ns=lambda: 125,
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="Generation start timestamp is already bound",
+    ):
+        direct.bind_generation_start_ns(101)

@@ -21,6 +21,7 @@ quality = [
     "lm-eval[hf]==0.4.13",
 ]
 
+llm-compressor = ["llmcompressor==0.14.0"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra --strict-config --strict-markers"

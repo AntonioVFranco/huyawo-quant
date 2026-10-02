@@ -9,6 +9,10 @@ from huyawo_quant.contracts.benchmarks import (
     BenchmarkMetric,
     BenchmarkResult,
 )
+from huyawo_quant.contracts.calibration import (
+    CalibrationManifest,
+    CalibrationPreprocessing,
+)
 from huyawo_quant.contracts.environment import (
     CudaToolkitFingerprint,
     EnvironmentFingerprint,
@@ -38,6 +42,8 @@ __all__ = [
     "BenchmarkMetric",
     "BenchmarkResult",
     "ArtifactFileIdentity",
+    "CalibrationManifest",
+    "CalibrationPreprocessing",
     "ContractModel",
     "DatasetIdentity",
     "EvaluationProfile",

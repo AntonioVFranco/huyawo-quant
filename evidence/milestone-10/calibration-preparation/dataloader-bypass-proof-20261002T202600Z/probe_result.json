@@ -1,0 +1,78 @@
+{
+  "backend": {
+    "name": "llmcompressor",
+    "version": "0.14.0"
+  },
+  "derived": {
+    "direct_dataset_handoff_preserves_manifest_order": false,
+    "huyawo_must_own_order": true,
+    "huyawo_must_own_sample_count": true,
+    "huyawo_must_own_truncation": true,
+    "huyawo_owned_dataloader_is_current_preferred_handoff": true
+  },
+  "execution": {
+    "artifact_write_executed": false,
+    "benchmark_executed": false,
+    "calibration_executed": false,
+    "dataset_download_executed": false,
+    "model_load_executed": false,
+    "quantization_executed": false,
+    "real_data_preprocessing_executed": false,
+    "source_mutation_executed": false
+  },
+  "increment": 2,
+  "milestone": 10,
+  "observed": {
+    "backend_max_seq_length_bypassed": true,
+    "backend_num_calibration_samples_bypassed": true,
+    "backend_sampler_indices": [
+      1,
+      3,
+      0,
+      2
+    ],
+    "backend_sampler_row_ids": [
+      2,
+      4,
+      7,
+      11
+    ],
+    "backend_sampler_type": "LengthAwareSampler",
+    "backend_shuffle_bypassed": true,
+    "dataloader_identity_preserved": true,
+    "dataloader_row_ids": [
+      7,
+      2,
+      11,
+      4
+    ],
+    "dataloader_sequence_lengths": [
+      2,
+      5,
+      1,
+      3
+    ],
+    "dataset_path_reorders_nonuniform_input": true,
+    "source_row_ids": [
+      7,
+      2,
+      11,
+      4
+    ],
+    "source_sequence_lengths": [
+      2,
+      5,
+      1,
+      3
+    ]
+  },
+  "probe": "dataloader_bypass",
+  "raw_log": {
+    "path": "raw.log",
+    "sha256": "4dff80134b1c08dbe72ffe2452ef040a63d3cadba89019b35de8d83c03df3c87",
+    "source_runtime_path": "/tmp/huyawo-m10-increment-2-dataloader-bypass-proof-20261002T202600Z.log"
+  },
+  "schema_version": "1",
+  "source_commit": "8303e261aa07b31fc870a141afd8ead11830f984",
+  "terminal": "HUYAWO_QUANT_20261002_M10_INCREMENT_2_DATALOADER_BYPASS_PROOF_PASSED"
+}

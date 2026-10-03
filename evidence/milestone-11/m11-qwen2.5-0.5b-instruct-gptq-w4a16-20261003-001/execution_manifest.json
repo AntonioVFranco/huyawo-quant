@@ -1,0 +1,125 @@
+{
+  "authorization": {
+    "artifact_creation_authorized": false,
+    "dataset_download_authorized": false,
+    "model_download_authorized": false,
+    "quantization_authorized": false,
+    "runtime_validation_authorized": false
+  },
+  "backend": {
+    "name": "llm_compressor",
+    "recipe_builder": "build_llm_compressor_gptq_w4a16_recipe",
+    "save_compressed": true,
+    "version": "0.14.0"
+  },
+  "calibration_execution": {
+    "max_seq_length": 2048,
+    "num_calibration_samples": 512,
+    "seed": 42,
+    "token_budget": null
+  },
+  "calibration_manifest": {
+    "file": "calibration_manifest.json",
+    "sample_indices_sha256": "070eef26cb7a05526116c20df5827d317faa86355a95d9eb30b37d463b5d0bdf",
+    "schema_version": "1",
+    "sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3"
+  },
+  "calibration_selection": {
+    "dataset_load_split_expression": "train_sft[:512]",
+    "operation_order": [
+      "load_first_512_rows",
+      "shuffle_seed_42"
+    ],
+    "selection_runtime": {
+      "datasets": "5.0.1"
+    },
+    "source_column": "messages"
+  },
+  "declared_target_runtime": {
+    "runtime": "vllm",
+    "validated": false,
+    "validation_milestone": 12,
+    "version": "0.30.0"
+  },
+  "environment_fingerprint": {
+    "sha256": "3a4eef1f22f1e108398afbe029e85ed86a7aefb50d042c9315d705c1f548a509",
+    "source_path": "/tmp/huyawo-quant-environment-fingerprint-20261003-a5000-llmcompressor-0140.json"
+  },
+  "generation_smoke": {
+    "cuda_device_index": 0,
+    "do_sample": false,
+    "max_input_tokens": 32,
+    "max_new_tokens": 8,
+    "num_beams": 1,
+    "persist_prompt_or_output": false,
+    "prompt": "Hello",
+    "seed": 0,
+    "use_cache": true
+  },
+  "governance": {
+    "calibration_manifest_schema_version": {
+      "authority": "accepted_m10_contract_and_test_surface",
+      "authority_file": "tests/contracts/test_calibration.py",
+      "authority_file_sha256": "4e6ef01c9c90aabac30d086124bc2eb9b3d634a94cda57e7b0db92fbba02ffc1",
+      "value": "1"
+    }
+  },
+  "model_identity": {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "resolved_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "source": "huggingface"
+  },
+  "package_versions": {
+    "accelerate": "1.15.0",
+    "compressed-tensors": "0.19.0",
+    "datasets": "5.0.1",
+    "huggingface-hub": "1.33.0",
+    "llmcompressor": "0.14.0",
+    "torch": "2.14.0+cu126",
+    "transformers": "5.17.0"
+  },
+  "planned_artifact": {
+    "layout": "huggingface_pretrained",
+    "must_not_exist_before_execution": true,
+    "root": "/workspace/huyawo-quant/artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+    "serialization_format": "safetensors"
+  },
+  "prepared_at": "2026-10-03T23:24:23.239609+00:00",
+  "quant_plan": {
+    "file": "quant_plan.json",
+    "sha256": "f9fea9fd223f9b8177c3755901eb46b704e6b7845ad9322eb4b5d1dde633929e"
+  },
+  "record_kind": "m11_preexecution_manifest",
+  "record_version": "1",
+  "reference_compatibility_runtime": {
+    "role": "artifact_load_and_generation_compatibility_only",
+    "runtime": "transformers",
+    "version": "5.17.0"
+  },
+  "repository_head": "201a19b1677fe27a769533710579ac301b12e512",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "state": "PREEXECUTION_FROZEN",
+  "success_criteria": [
+    "frozen model and tokenizer identities remain exact",
+    "frozen calibration dataset revision remains exact",
+    "quantization completes exactly once",
+    "planned artifact root is new before execution",
+    "compressed artifact save completes",
+    "QuantArtifactIdentity is constructed from exact saved bytes",
+    "independent artifact identity verification passes",
+    "local-only Transformers reload passes",
+    "bounded deterministic generation produces at least one new token",
+    "generation does not exceed max_new_tokens",
+    "post-validation artifact identity remains unchanged",
+    "artifact_save failures are preserved if observed",
+    "artifact_load failures are preserved if observed",
+    "no vLLM deployability claim is made before Milestone 12"
+  ],
+  "tokenizer_identity": {
+    "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "resolved_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "source": "huggingface",
+    "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct"
+  }
+}

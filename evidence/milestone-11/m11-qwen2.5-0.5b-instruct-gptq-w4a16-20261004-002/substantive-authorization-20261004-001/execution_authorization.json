@@ -1,0 +1,102 @@
+{
+  "authorization": {
+    "authorization_is_single_use_after_attempt_start": true,
+    "execution_started_by_this_record": false,
+    "operator_must_run_a_separate_substantive_gate": true,
+    "substantive_quantization_authorized": true
+  },
+  "authorization_id": "m11-gptq-w4a16-substantive-authorization-20261004-001",
+  "authorization_trigger": "operator_executed_authorization_gate",
+  "authorized_at": "2026-10-04T19:45:34.255542Z",
+  "execution_binding": {
+    "algorithm": "gptq",
+    "all_local_binding_must_complete_before_start_marker": true,
+    "artifact_root": "/workspace/huyawo-quant/artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002",
+    "attempt_budget": 1,
+    "attempt_consumed": false,
+    "attempt_start_marker_must_be_persisted_before_backend_call": true,
+    "automatic_retry_permitted_after_start": false,
+    "automatic_retry_permitted_before_start": true,
+    "backend": "llm_compressor",
+    "backend_call_must_immediately_follow_start_marker": true,
+    "backend_version": "0.14.0",
+    "calibration_builder": "huyawo_quant.calibration.preparation.prepare_calibration_dataloader",
+    "execution_adapter": "huyawo_quant.backends.llm_compressor.execute_llm_compressor_oneshot",
+    "execution_call": "execute_llm_compressor_oneshot(kwargs=resolved_kwargs)",
+    "execution_evidence_root": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/artifact-execution-20261004-001",
+    "kwargs_builder": "huyawo_quant.backends.llm_compressor.build_llm_compressor_oneshot_kwargs",
+    "recipe_builder": "huyawo_quant.backends.llm_compressor_recipes.build_llm_compressor_gptq_w4a16_recipe",
+    "reflection_after_start_marker_permitted": false,
+    "scheme": "w4a16",
+    "signature_discovery_after_start_marker_permitted": false
+  },
+  "failure_policy": {
+    "artifact_load_failure_stage": "artifact_load",
+    "artifact_save_failure_stage": "artifact_save",
+    "automatic_substantive_retry_after_start": false,
+    "preserve_backend_failure": true,
+    "preserve_execution_evidence": true,
+    "preserve_partial_artifact": true
+  },
+  "input_authority": {
+    "calibration_source_live_manifest_must_be_reverified_before_start": true,
+    "dataloader_must_be_reverified_before_start": true,
+    "expected_calibration_dataloader_sha256": "5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+    "input_reuse_authority": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/input_reuse_authority.json",
+      "sha256": "11d904632e33854090ab18d209aaad6d067e3968bc15e9b542d49b5d9738296d"
+    },
+    "model_snapshot_live_manifest_must_be_reverified_before_start": true,
+    "redownload_permitted": false,
+    "rematerialization_required": false
+  },
+  "milestone_boundary": {
+    "bounded_deterministic_generation_required": true,
+    "deployability_claim_permitted": false,
+    "independent_identity_verification_required": true,
+    "local_transformers_validation_required": true,
+    "milestone": 11,
+    "quant_artifact_identity_required": true,
+    "reference_runtime": "transformers",
+    "vllm_validation_authorized": false,
+    "vllm_validation_milestone": 12
+  },
+  "preexecution_checkpoint": {
+    "commit": "b4ad36f55d01be128411ccb7aa3fc0ce92fc6409",
+    "protocol_files": {
+      "PREEXECUTION_SHA256SUMS": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/PREEXECUTION_SHA256SUMS",
+        "sha256": "bfb584d2f596210c5fa7f51b06304e63f5f373d285cf6aa6a50a9a58df07fedd"
+      },
+      "calibration_manifest.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/calibration_manifest.json",
+        "sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3"
+      },
+      "environment_fingerprint.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/environment_fingerprint.json",
+        "sha256": "6ced29704ae2d259241b8afea5f88b3bf566729f85d827c0b786a26025832ce3"
+      },
+      "input_reuse_authority.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/input_reuse_authority.json",
+        "sha256": "11d904632e33854090ab18d209aaad6d067e3968bc15e9b542d49b5d9738296d"
+      },
+      "quant_plan.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/quant_plan.json",
+        "sha256": "f9fea9fd223f9b8177c3755901eb46b704e6b7845ad9322eb4b5d1dde633929e"
+      },
+      "retry_preexecution_manifest.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/retry_preexecution_manifest.json",
+        "sha256": "25d766f6a5cbcacbe5943140b0d274227b832791aff4d664ce732477bd5fcf2b"
+      }
+    }
+  },
+  "record_type": "m11_substantive_execution_authorization",
+  "repository": {
+    "authorization_checkpoint": "b4ad36f55d01be128411ccb7aa3fc0ce92fc6409",
+    "branch": "main",
+    "token_free_origin": "https://github.com/AntonioVFranco/huyawo-quant.git"
+  },
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002",
+  "schema_version": "m11-substantive-execution-authorization-v1",
+  "state": "AUTHORIZED_FOR_SINGLE_SUBSTANTIVE_ATTEMPT"
+}

@@ -1,0 +1,115 @@
+{
+  "authority": {
+    "authorizes_artifact_creation": false,
+    "authorizes_calibration": false,
+    "authorizes_model_load": false,
+    "authorizes_quantization": false,
+    "modifies_frozen_preexecution_files": false,
+    "purpose": "Bind the recertified execution host environment to the immutable preexecution protocol before any evidence-bearing model execution."
+  },
+  "created_at": "2026-10-04T14:55:52.533179+00:00",
+  "execution_environment": {
+    "relative_path": "environment-rebind-20261004/environment_fingerprint.json",
+    "sha256": "6ced29704ae2d259241b8afea5f88b3bf566729f85d827c0b786a26025832ce3"
+  },
+  "execution_state": {
+    "artifact_load_executed": false,
+    "artifact_root_absent": true,
+    "artifact_save_executed": false,
+    "calibration_executed": false,
+    "dataset_download_executed": false,
+    "model_download_executed": false,
+    "model_generation_executed": false,
+    "model_load_executed": false,
+    "quantization_executed": false,
+    "tokenizer_load_executed": false
+  },
+  "hardware_confirmation": {
+    "compute_capability": "8.6",
+    "device_index": 0,
+    "driver_version": "580.159.04",
+    "gpu_name": "NVIDIA RTX A5000",
+    "gpu_uuid": "GPU-dbb3bdaf-291d-7055-ee92-0334e65268a7",
+    "memory_total": "24564 MiB"
+  },
+  "historical_environment": {
+    "relative_path": "environment_fingerprint.json",
+    "sha256": "3a4eef1f22f1e108398afbe029e85ed86a7aefb50d042c9315d705c1f548a509"
+  },
+  "preexecution_protocol": {
+    "files": [
+      {
+        "relative_path": "PREEXECUTION_SHA256SUMS",
+        "sha256": "9e7c0323b79b7da65ec32ff51acbfea818efc05e808759e68f6b93ee507b716c"
+      },
+      {
+        "relative_path": "calibration_manifest.json",
+        "sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3"
+      },
+      {
+        "relative_path": "environment_fingerprint.json",
+        "sha256": "3a4eef1f22f1e108398afbe029e85ed86a7aefb50d042c9315d705c1f548a509"
+      },
+      {
+        "relative_path": "execution_manifest.json",
+        "sha256": "e510d2acc8cc71986695ae3794567696af128332b3c4684649ab6b58affe60fc"
+      },
+      {
+        "relative_path": "quant_plan.json",
+        "sha256": "f9fea9fd223f9b8177c3755901eb46b704e6b7845ad9322eb4b5d1dde633929e"
+      }
+    ],
+    "immutable": true
+  },
+  "record_type": "execution_environment_rebind",
+  "repository": {
+    "branch": "main",
+    "head": "9fe8cfd8652144bcf40ca63ced52b6ae8dbc3dea"
+  },
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "schema_version": "1",
+  "software_equivalence": {
+    "classification": "host_identity_and_capture_time_only",
+    "curated_python_distributions_exact_equal": true,
+    "differing_paths": [
+      "captured_at",
+      "nvidia_gpus[0].driver_version",
+      "nvidia_gpus[0].pci_bus_id",
+      "nvidia_gpus[0].uuid",
+      "platform_release",
+      "platform_version"
+    ],
+    "host_deltas": [
+      {
+        "current": "2026-10-04T14:43:39.092091Z",
+        "historical": "2026-10-03T16:17:27.576695Z",
+        "path": "captured_at"
+      },
+      {
+        "current": "580.159.04",
+        "historical": "580.126.09",
+        "path": "nvidia_gpus[0].driver_version"
+      },
+      {
+        "current": "00000000:4F:00.0",
+        "historical": "00000000:53:00.0",
+        "path": "nvidia_gpus[0].pci_bus_id"
+      },
+      {
+        "current": "GPU-dbb3bdaf-291d-7055-ee92-0334e65268a7",
+        "historical": "GPU-87a35f85-4bd9-4082-9dfa-f6809a34de56",
+        "path": "nvidia_gpus[0].uuid"
+      },
+      {
+        "current": "6.8.0-134-generic",
+        "historical": "6.8.0-60-generic",
+        "path": "platform_release"
+      },
+      {
+        "current": "#134~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jun 30 14:05:04 UTC ",
+        "historical": "#63~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Apr 22 19:00:15 UTC 2",
+        "path": "platform_version"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "artifact_root_exists": false,
+  "automatic_retry_permitted": false,
+  "deployability_claim": false,
+  "exception_type": "builtins.RuntimeError",
+  "message": "binding_failed:execute_llm_compressor_oneshot:['kwargs']",
+  "quantization_attempt_consumed": true,
+  "recorded_at": "2026-10-04T18:10:49.974422Z",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "schema_version": "m11-artifact-execution-failure-v1",
+  "stage": "quantization",
+  "status": "FAIL",
+  "vllm_runtime_validation_executed": false
+}

@@ -1,0 +1,11 @@
+{
+  "artifact_root": "artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "calibration_source_identity_sha256": "ee96742564d3b54b5892e26d318ed26477e23a5fa9f32d7cc15b1fb376a6b48b",
+  "calibration_source_root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/calibration-source-512",
+  "offline_execution": true,
+  "quantization_attempt_consumed": false,
+  "recorded_at": "2026-10-04T18:10:49.933216Z",
+  "repository_head": "005002c2c2a02cfedc7c30c3dbc5d565eaf4d7a0",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "schema_version": "m11-artifact-execution-preboundary-v1"
+}

@@ -1,0 +1,12 @@
+{
+  "algorithm": "gptq",
+  "automatic_retry_permitted": false,
+  "backend": "llm_compressor",
+  "backend_version": "0.14.0",
+  "quantization_attempt_consumed": true,
+  "repository_head": "005002c2c2a02cfedc7c30c3dbc5d565eaf4d7a0",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "schema_version": "m11-quantization-attempt-start-v1",
+  "scheme": "w4a16",
+  "started_at": "2026-10-04T18:10:49.941564Z"
+}

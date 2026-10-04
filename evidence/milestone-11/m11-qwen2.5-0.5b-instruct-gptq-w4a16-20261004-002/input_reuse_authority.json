@@ -1,0 +1,53 @@
+{
+  "calibration_preparation": {
+    "expected_batch_count": 512,
+    "expected_dataloader_sha256": "5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+    "expected_total_attention_tokens": 580543,
+    "identity_record": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/input-materialization-20261004-001/calibration_preparation_identity.json",
+      "sha256": "3c08e2936172641473ac65f76ee0875803a5846ae852772c8876639c5ad605d9"
+    },
+    "must_be_reverified_before_attempt_start": true
+  },
+  "calibration_source": {
+    "identity_record": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/input-materialization-20261004-001/calibration_source_identity.json",
+      "sha256": "ee96742564d3b54b5892e26d318ed26477e23a5fa9f32d7cc15b1fb376a6b48b"
+    },
+    "live_manifest_verified": true,
+    "local_file_manifest_sha256": "164d65ff397ba7a4005511dd6dcdff70faf74baab76981716126ced6a3f918d5",
+    "persisted_root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/calibration-source-512",
+    "row_count": 512,
+    "source_content_sha256": "477d33c976c3213741b73918c63d0563073c297423b69843eeb1550cae5ae2e5"
+  },
+  "historical_checkpoint": "f6e12d18e5f6d508d9babf74bef67e2387fca226",
+  "historical_input_materialization": {
+    "checksums_record": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/input-materialization-20261004-001/SHA256SUMS",
+      "sha256": "64019408320eb7b3c05629e8038d6161224db52c7bb6e379002026f06ed225f8"
+    },
+    "redownload_required": false,
+    "rematerialization_required": false
+  },
+  "model_snapshot": {
+    "file_manifest_sha256": "3ea96c0633ee419c646b1cbb2e36d506c9edc5f279b625d716966adf013049ed",
+    "identity_record": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/input-materialization-20261004-001/model_snapshot_identity.json",
+      "sha256": "857f3c4c8f307eabe93c42e0b53164922250000ada5811af9ff59022fef464c8"
+    },
+    "live_manifest_verified": true,
+    "snapshot_path": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/hf-home/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "record_type": "m11_input_reuse_authority",
+  "recorded_at": "2026-10-04T18:28:59.678307Z",
+  "repository_head": "f6e12d18e5f6d508d9babf74bef67e2387fca226",
+  "reuse_policy": {
+    "historical_records_are_immutable": true,
+    "historical_run_id_relabeling_permitted": false,
+    "live_input_identity_verification_required": true,
+    "new_run_operational_metadata_required": true
+  },
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002",
+  "schema_version": "m11-input-reuse-authority-v1",
+  "source_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001"
+}

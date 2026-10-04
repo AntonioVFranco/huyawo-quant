@@ -1,0 +1,47 @@
+{
+  "dataset_id": "HuggingFaceH4/ultrachat_200k",
+  "load_split_expression": "train_sft[:512]",
+  "local_content_sha256": "477d33c976c3213741b73918c63d0563073c297423b69843eeb1550cae5ae2e5",
+  "local_file_count": 3,
+  "local_file_manifest_sha256": "164d65ff397ba7a4005511dd6dcdff70faf74baab76981716126ced6a3f918d5",
+  "local_files": [
+    {
+      "relative_path": "data-00000-of-00001.arrow",
+      "sha256": "75e39ea7d095c70def4c30f56c703dc3116c4bf8b9950110354032721f2344f4",
+      "size_bytes": 3311584
+    },
+    {
+      "relative_path": "dataset_info.json",
+      "sha256": "3b77fe977f97b1d935332d3df4ac43319d293becddc24dd42529147ffac9453d",
+      "size_bytes": 1546
+    },
+    {
+      "relative_path": "state.json",
+      "sha256": "a64be4a3b0317782dcbdea89b31ebcdada4053575e2533f16b3b53d49e8de7f5",
+      "size_bytes": 260
+    }
+  ],
+  "local_persisted_root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/calibration-source-512",
+  "record_type": "calibration_source_identity",
+  "requested_revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+  "resolved_revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+  "row_count": 512,
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "sample_indices_sha256": "070eef26cb7a05526116c20df5827d317faa86355a95d9eb30b37d463b5d0bdf",
+  "schema_version": "1",
+  "selection_semantics": [
+    "load_first_512_rows_in_source_order",
+    "do_not_shuffle_remote_dataset",
+    "replay_committed_sample_indices_during_huyawo_preparation"
+  ],
+  "source_cache_files": [
+    {
+      "path": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/hf-home/datasets/HuggingFaceH4___ultrachat_200k/default/0.0.0/8049631c405ae6576f93f445c6b8166f76f5505a/ultrachat_200k-train_sft-00000-of-00003.arrow",
+      "sha256": "38fb6ca4e3a6a80ca6a13cf96259edfe53a771b09909b03267317654bc5d7363",
+      "size_bytes": 505713512
+    }
+  ],
+  "source_content_sha256": "477d33c976c3213741b73918c63d0563073c297423b69843eeb1550cae5ae2e5",
+  "source_dataset_fingerprint": "d6bc74605aa791c3",
+  "source_split": "train_sft"
+}

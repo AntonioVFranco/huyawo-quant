@@ -1,0 +1,27 @@
+{
+  "completed_at": "2026-10-04T16:52:42.091332+00:00",
+  "next_boundary": {
+    "artifact_creation_authorized": false,
+    "calibration_source_local": true,
+    "model_snapshot_offline_complete": true,
+    "network_required_for_quantization": false,
+    "quantization_authorized": false
+  },
+  "record_type": "m11_input_materialization_result",
+  "repository_head": "8a12aaf27d1e9af780e9121ee120de0dea886557",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "schema_version": "1",
+  "state": {
+    "artifact_created": false,
+    "calibration_forward_pass_executed": false,
+    "calibration_preparation_executed": true,
+    "dataset_materialized": true,
+    "dataset_saved_locally": true,
+    "model_loaded": false,
+    "model_snapshot_materialized": true,
+    "network_started": true,
+    "quantization_started": false,
+    "tokenizer_loaded": true
+  },
+  "status": "PASS"
+}

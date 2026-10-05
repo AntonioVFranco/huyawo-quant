@@ -1,0 +1,31 @@
+{
+  "calibration_forward_pass_executed": false,
+  "calibration_manifest": {
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002/calibration_manifest.json",
+    "sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3"
+  },
+  "dataloader": {
+    "batch_count": 512,
+    "batch_keys": [
+      "attention_mask",
+      "input_ids"
+    ],
+    "max_observed_sequence_length": 2048,
+    "sha256": "5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+    "total_attention_tokens": 580543
+  },
+  "historical_identity": {
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/input-materialization-20261004-001/calibration_preparation_identity.json",
+    "sha256": "3c08e2936172641473ac65f76ee0875803a5846ae852772c8876639c5ad605d9"
+  },
+  "quantization_executed": false,
+  "record_type": "m11_calibration_preparation_rebind",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "schema_version": "m11-calibration-preparation-rebind-v1",
+  "tokenizer": {
+    "class": "Qwen2Tokenizer",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "vocab_size": 151665
+  }
+}

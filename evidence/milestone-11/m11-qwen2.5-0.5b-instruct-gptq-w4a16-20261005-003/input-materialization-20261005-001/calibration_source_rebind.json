@@ -1,0 +1,48 @@
+{
+  "dataset_id": "HuggingFaceH4/ultrachat_200k",
+  "exact_historical_file_entries_match": true,
+  "historical_identity": {
+    "historical_local_file_manifest_sha256": "164d65ff397ba7a4005511dd6dcdff70faf74baab76981716126ced6a3f918d5",
+    "historical_source_content_sha256": "477d33c976c3213741b73918c63d0563073c297423b69843eeb1550cae5ae2e5",
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001/input-materialization-20261004-001/calibration_source_identity.json",
+    "sha256": "ee96742564d3b54b5892e26d318ed26477e23a5fa9f32d7cc15b1fb376a6b48b"
+  },
+  "local_file_count": 3,
+  "local_files": [
+    {
+      "relative_path": "data-00000-of-00001.arrow",
+      "sha256": "75e39ea7d095c70def4c30f56c703dc3116c4bf8b9950110354032721f2344f4",
+      "size_bytes": 3311584
+    },
+    {
+      "relative_path": "dataset_info.json",
+      "sha256": "3b77fe977f97b1d935332d3df4ac43319d293becddc24dd42529147ffac9453d",
+      "size_bytes": 1546
+    },
+    {
+      "relative_path": "state.json",
+      "sha256": "a64be4a3b0317782dcbdea89b31ebcdada4053575e2533f16b3b53d49e8de7f5",
+      "size_bytes": 260
+    }
+  ],
+  "persisted_columns": [
+    "prompt",
+    "prompt_id",
+    "messages"
+  ],
+  "persisted_dataset_fingerprint": "42043e2ac75be26f",
+  "persisted_root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/calibration-source-512",
+  "persisted_row_count": 512,
+  "record_type": "m11_calibration_source_rebind",
+  "revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "schema_version": "m11-calibration-source-rebind-v1",
+  "source_columns": [
+    "prompt",
+    "prompt_id",
+    "messages"
+  ],
+  "source_dataset_fingerprint": "d6bc74605aa791c3",
+  "source_row_count": 512,
+  "split_expression": "train_sft[:512]"
+}

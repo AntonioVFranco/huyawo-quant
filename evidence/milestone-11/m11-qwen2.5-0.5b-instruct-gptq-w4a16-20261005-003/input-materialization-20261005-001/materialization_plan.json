@@ -1,0 +1,45 @@
+{
+  "environment_fingerprint": {
+    "relative_role": "current_host_environment",
+    "sha256": "d0a74d64f159f469e358f318db155aec9a3e7b62ff11dd094c1e5f0cf9b59857"
+  },
+  "network_sources": {
+    "dataset": {
+      "repo_id": "HuggingFaceH4/ultrachat_200k",
+      "revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+      "split_expression": "train_sft[:512]"
+    },
+    "model": {
+      "repo_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+    }
+  },
+  "operations": {
+    "artifact_creation": false,
+    "artifact_load": false,
+    "calibration_forward_pass": false,
+    "calibration_preparation": true,
+    "dataset_download": true,
+    "dataset_local_persistence": true,
+    "generation": false,
+    "model_load": false,
+    "model_snapshot_download": true,
+    "quantization": false,
+    "tokenizer_load": true,
+    "vllm_runtime_validation": false
+  },
+  "protocol_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002",
+  "record_type": "m11_fresh_host_input_materialization_plan",
+  "repository_head": "0d6ea0c464d48f762d405a049392f3675216bf7b",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "runtime_cache": {
+    "calibration_source_root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/calibration-source-512",
+    "hf_datasets_cache": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/hf-home/datasets",
+    "hf_home": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/hf-home",
+    "hf_hub_cache": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/hf-home/hub",
+    "root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003"
+  },
+  "schema_version": "m11-fresh-host-input-materialization-v1",
+  "source_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261003-001",
+  "started_at": "2026-10-05T13:50:11.741337+00:00"
+}

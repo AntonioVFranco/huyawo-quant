@@ -1,0 +1,135 @@
+{
+  "artifact_identity": {
+    "files": [
+      {
+        "relative_path": "chat_template.jinja",
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "size_bytes": 2507
+      },
+      {
+        "relative_path": "config.json",
+        "sha256": "46c5d7b24545bda5dcad64d7f8c1769cebfa4d475293effe8bf4eab2603a3649",
+        "size_bytes": 1604
+      },
+      {
+        "relative_path": "generation_config.json",
+        "sha256": "e694a23c4adabaa1177508c9407bee789ff55f3d5908dfe6755d93a6af55f71d",
+        "size_bytes": 242
+      },
+      {
+        "relative_path": "model.safetensors",
+        "sha256": "8d129d1885c5ef8a69c019946ff00d4e6dd443442e11676614928b4715834985",
+        "size_bytes": 456988896
+      },
+      {
+        "relative_path": "recipe.yaml",
+        "sha256": "26343e1c65d13a3ed3b7dec02223796353845a4c18d285ad2c2db32b108d8983",
+        "size_bytes": 912
+      },
+      {
+        "relative_path": "tokenizer.json",
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "size_bytes": 11421892
+      },
+      {
+        "relative_path": "tokenizer_config.json",
+        "sha256": "2e3bd3cb5055f7a903a54e7062b2fd14d21b70f4174c3ffcd9fc81ec50a25631",
+        "size_bytes": 693
+      }
+    ],
+    "layout": "huggingface_pretrained",
+    "serialization_format": "safetensors"
+  },
+  "artifact_root": "artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "attempt_state": {
+    "substantive_quantization_attempt_budget": 1,
+    "substantive_quantization_attempt_consumed": true,
+    "substantive_rerun_permitted": false
+  },
+  "backend": {
+    "name": "llm_compressor",
+    "version": "0.14.0"
+  },
+  "calibration_manifest": {
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/calibration_manifest.json",
+    "sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3",
+    "size_bytes": 5377
+  },
+  "claims": {
+    "artifact_identity_verified": true,
+    "bounded_generation_smoke_passed": true,
+    "performance_claim_permitted": false,
+    "quality_claim_permitted": false,
+    "transformers_reference_load_compatible": true,
+    "vllm_deployability_claim_permitted": false
+  },
+  "compatibility_execution_log": {
+    "relative_path": "transformers_compatibility.log",
+    "sha256": "1a50ff267b3f81f983447e8aeea98beee4d50cc138cfe4d25ee4d9586f863dc4",
+    "size_bytes": 4465
+  },
+  "declared_target_runtime": {
+    "required_validation_milestone": 12,
+    "runtime": "vllm",
+    "runtime_target_satisfied_by_this_record": false,
+    "runtime_validation_executed": false,
+    "version": "0.30.0"
+  },
+  "environment_fingerprint": {
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/environment_fingerprint.json",
+    "sha256": "d0a74d64f159f469e358f318db155aec9a3e7b62ff11dd094c1e5f0cf9b59857",
+    "size_bytes": 7314
+  },
+  "execution_preboundary": {
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/artifact-execution-20261005-001/execution_preboundary.json",
+    "sha256": "7ec0ef8bb91c55d902a028a9593c3bfb300bc20f15b60e256ba5c0d7d0944bc7",
+    "size_bytes": 1301
+  },
+  "execution_success": {
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/artifact-execution-20261005-001/execution_success.json",
+    "sha256": "ab68f3c499b9e95ba3e30f2209068c4663a0352fd02c43349f04d29bfcda07f2",
+    "size_bytes": 725
+  },
+  "generation_smoke": {
+    "cuda_device_index": 0,
+    "max_input_tokens": 32,
+    "max_new_tokens": 8,
+    "prompt": "Hello",
+    "raw_generated_text_persisted": false,
+    "seed": 0
+  },
+  "observed_result": {
+    "artifact_mutated": false,
+    "execution_evidence_mutated": false,
+    "failure_record_present": false,
+    "generation_completed": true,
+    "model_load_completed": true,
+    "tokenizer_load_completed": true
+  },
+  "quant_plan": {
+    "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/quant_plan.json",
+    "sha256": "f9fea9fd223f9b8177c3755901eb46b704e6b7845ad9322eb4b5d1dde633929e",
+    "size_bytes": 892
+  },
+  "record_type": "transformers_artifact_compatibility_success",
+  "recorded_at": "2026-10-05T20:21:36.973021Z",
+  "reference_compatibility_runtime": {
+    "network_independent": true,
+    "offline_controls": {
+      "HF_DATASETS_OFFLINE": "1",
+      "HF_HUB_DISABLE_TELEMETRY": "1",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1"
+    },
+    "runtime": "transformers",
+    "version": "5.17.0"
+  },
+  "repository": {
+    "branch": "main",
+    "head": "e4423577548c453c9c822409cb14054b8114409b"
+  },
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "schema_version": "m11-substantive-execution-v1",
+  "status": "PASS",
+  "validation_stage": "artifact_load"
+}

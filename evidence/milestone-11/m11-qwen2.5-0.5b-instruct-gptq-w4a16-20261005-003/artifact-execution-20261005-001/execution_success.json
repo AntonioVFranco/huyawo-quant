@@ -1,0 +1,17 @@
+{
+  "artifact_file_count": 7,
+  "artifact_root": "/workspace/huyawo-quant/artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "artifact_total_bytes": 468416746,
+  "automatic_retry_permitted": false,
+  "backend_call_entered": true,
+  "backend_result_type": "transformers.models.qwen2.modeling_qwen2.Qwen2ForCausalLM",
+  "backend_returned": true,
+  "quantization_attempt_consumed": true,
+  "record_type": "m11_execution_success",
+  "recorded_at": "2026-10-05T18:58:43.172827Z",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "schema_version": "m11-substantive-execution-v1",
+  "status": "PASS",
+  "transformers_artifact_validation_executed": false,
+  "vllm_runtime_validation_executed": false
+}

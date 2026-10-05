@@ -1,0 +1,20 @@
+{
+  "algorithm": "gptq",
+  "artifact_root": "/workspace/huyawo-quant/artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "authorization_sha256": "78e26a5eab8e05041a8f0b53ea17c619b9e7e825969228d47b46674d9fc82df9",
+  "automatic_retry_permitted": true,
+  "backend": "llm_compressor",
+  "backend_version": "0.14.0",
+  "calibration_manifest_sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3",
+  "calibration_source": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/calibration-source-512",
+  "dataloader_sha256": "5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+  "model_source": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/hf-home/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+  "quant_plan_sha256": "f9fea9fd223f9b8177c3755901eb46b704e6b7845ad9322eb4b5d1dde633929e",
+  "quantization_attempt_consumed": false,
+  "record_type": "m11_execution_preboundary",
+  "recorded_at": "2026-10-05T18:56:09.185734Z",
+  "repository_head": "e4423577548c453c9c822409cb14054b8114409b",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "schema_version": "m11-substantive-execution-v1",
+  "scheme": "w4a16"
+}

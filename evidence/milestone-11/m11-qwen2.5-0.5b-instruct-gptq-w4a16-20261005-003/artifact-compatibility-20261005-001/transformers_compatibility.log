@@ -1,0 +1,54 @@
+HEAD=e4423577548c453c9c822409cb14054b8114409b
+BRANCH=main
+STATUS_BEGIN
+?? artifacts/
+?? evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/artifact-execution-20261005-001/
+STATUS_END
+execution_preboundary.json: OK
+execution_success.json: OK
+quantization_attempt_started.json: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/chat_template.jinja: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/config.json: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/generation_config.json: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/model.safetensors: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/recipe.yaml: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/tokenizer.json: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/tokenizer_config.json: OK
+QUANT_ARTIFACT_IDENTITY_FROZEN_MANIFEST_MATCH=true
+QUANT_ARTIFACT_IDENTITY_PRECHECK=PASS
+QUANT_ARTIFACT_IDENTITY_JSON={"layout":"huggingface_pretrained","serialization_format":"safetensors","files":[{"relative_path":"chat_template.jinja","sha256":"cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f","size_bytes":2507},{"relative_path":"config.json","sha256":"46c5d7b24545bda5dcad64d7f8c1769cebfa4d475293effe8bf4eab2603a3649","size_bytes":1604},{"relative_path":"generation_config.json","sha256":"e694a23c4adabaa1177508c9407bee789ff55f3d5908dfe6755d93a6af55f71d","size_bytes":242},{"relative_path":"model.safetensors","sha256":"8d129d1885c5ef8a69c019946ff00d4e6dd443442e11676614928b4715834985","size_bytes":456988896},{"relative_path":"recipe.yaml","sha256":"26343e1c65d13a3ed3b7dec02223796353845a4c18d285ad2c2db32b108d8983","size_bytes":912},{"relative_path":"tokenizer.json","sha256":"3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8","size_bytes":11421892},{"relative_path":"tokenizer_config.json","sha256":"2e3bd3cb5055f7a903a54e7062b2fd14d21b70f4174c3ffcd9fc81ec50a25631","size_bytes":693}]}
+TRANSFORMERS_COMPATIBILITY_CALL_START=true
+Applying quantization config:   0%|          | 0/168 [00:00<?, ?it/s]Applying quantization config: 100%|██████████| 168/168 [00:00<00:00, 3668.11it/s]
+Compressing model:   0%|          | 0/168 [00:00<?, ?it/s]Compressing model: 100%|██████████| 168/168 [00:00<00:00, 10143.86it/s]
+Loading weights:   0%|          | 0/626 [00:00<?, ?it/s]Loading weights:  48%|████▊     | 300/626 [00:00<00:00, 2973.47it/s]Loading weights:  96%|█████████▌| 598/626 [00:00<00:00, 2436.86it/s]Loading weights: 100%|██████████| 626/626 [00:00<00:00, 2501.86it/s]
+Dispatching model:   0%|          | 0/319 [00:00<?, ?it/s]Dispatching model: 100%|██████████| 319/319 [00:00<00:00, 15978.40it/s]
+Decompressing model:   0%|          | 0/168 [00:00<?, ?it/s]Decompressing model:   1%|          | 1/168 [00:00<01:37,  1.70it/s]Decompressing model:  46%|████▋     | 78/168 [00:00<00:00, 151.97it/s]Decompressing model: 100%|██████████| 168/168 [00:00<00:00, 220.82it/s]
+TRANSFORMERS_ARTIFACT_VALIDATION=PASS
+FAILURE_RECORD_PRESENT=false
+TOKENIZER_LOAD_COMPLETED=true
+MODEL_LOAD_COMPLETED=true
+GENERATION_COMPLETED=true
+RAW_GENERATED_TEXT_PERSISTED=false
+VALIDATION_EXIT_CODE=0
+POST_VALIDATION_ARTIFACT_SHA256_BEGIN
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/chat_template.jinja: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/config.json: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/generation_config.json: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/model.safetensors: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/recipe.yaml: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/tokenizer.json: OK
+artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/tokenizer_config.json: OK
+POST_VALIDATION_ARTIFACT_SHA256_END
+execution_preboundary.json: OK
+execution_success.json: OK
+quantization_attempt_started.json: OK
+POST_STATUS_BEGIN
+?? artifacts/
+?? evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/artifact-execution-20261005-001/
+POST_STATUS_END
+ARTIFACT_MUTATED=false
+EXECUTION_EVIDENCE_MUTATED=false
+M11_SUBSTANTIVE_ATTEMPT_CONSUMED=1/1
+SUBSTANTIVE_RERUN_PERMITTED=false
+VLLM_RUNTIME_VALIDATION_EXECUTED=false
+HUYAWO_QUANT_20261005_M11_TRANSFORMERS_COMPATIBILITY_PASSED

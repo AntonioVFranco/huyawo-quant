@@ -1,0 +1,37 @@
+{
+  "backend": "llm_compressor",
+  "backend_version": "0.14.0",
+  "hardware": {
+    "accelerator": "cuda",
+    "compute_capability_major": 8,
+    "compute_capability_minor": 6,
+    "device_count": 1,
+    "device_name": "NVIDIA RTX A5000",
+    "memory_bytes_per_device": 25757220864,
+    "vendor": "nvidia"
+  },
+  "model": {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "resolved_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "source": "huggingface"
+  },
+  "recipe": {
+    "activation_mode": "none",
+    "algorithm": "gptq",
+    "ignored_modules": [
+      "lm_head"
+    ],
+    "scheme": "w4a16",
+    "weight_granularity": "group",
+    "weight_group_size": 128,
+    "weight_symmetric": true
+  },
+  "resolved_modules": [
+    "Linear"
+  ],
+  "runtime": {
+    "runtime": "vllm",
+    "version": "0.30.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "constraints_sha256": "b58b2073c87fda46a45622f7486a32162d4850c0fe15ff1d613bc08e3b2bb229",
+  "generation_authorized": false,
+  "historical_environment_sha256": "1f8a5d751f38622830ed04d4371566dab7acf0d66acffc9986d57493d48e7a71",
+  "model_load_authorized": false,
+  "preinstall_runtime_state_sha256": "b00fedd2196aa933c7eefc1e1f16fe23a11397c2a3ecfb17ad8da432d52aa742",
+  "resolver_report_sha256": "a48f423c7caa1e1c4338dc8adc6ad6631a49eb9c63a96aac008b31b139144e4e",
+  "run_id": "m12-qwen2.5-0.5b-instruct-gptq-w4a16-vllm-0.30.0-20261005-001",
+  "runtime_environment": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0",
+  "runtime_target": "vllm==0.30.0",
+  "schema": "huyawo.m12.runtime_install_started.v1",
+  "started_at": "2026-10-05T21:50:27.298323+00:00"
+}

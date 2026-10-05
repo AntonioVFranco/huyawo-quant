@@ -1,0 +1,3 @@
+pip==24.0	/workspace/huyawo-quant/.venv-m12-vllm-0.30.0/lib/python3.12/site-packages
+RUNTIME_PREFIX=/workspace/huyawo-quant/.venv-m12-vllm-0.30.0
+RUNTIME_TARGET_DISTRIBUTIONS_ABSENT=true

@@ -1,0 +1,24 @@
+{
+  "cuda_available": true,
+  "gpu_compute_capability": "8.6",
+  "gpu_name": "NVIDIA RTX A5000",
+  "gpu_total_memory_bytes": 25283526656,
+  "module_paths": {
+    "compressed_tensors": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0/lib/python3.12/site-packages/compressed_tensors/__init__.py",
+    "torch": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0/lib/python3.12/site-packages/torch/__init__.py",
+    "transformers": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0/lib/python3.12/site-packages/transformers/__init__.py",
+    "vllm": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0/lib/python3.12/site-packages/vllm/__init__.py"
+  },
+  "torch_cuda_runtime": "13.0",
+  "versions": {
+    "compressed-tensors": "0.17.0",
+    "torch": "2.13.0",
+    "torchaudio": "2.11.0",
+    "torchvision": "0.28.0",
+    "transformers": "5.18.0",
+    "triton": "3.7.1",
+    "vllm": "0.30.0"
+  },
+  "vllm_generation_executed": false,
+  "vllm_model_load_executed": false
+}

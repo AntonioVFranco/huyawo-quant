@@ -1,0 +1,13 @@
+{
+  "algorithm": "gptq",
+  "artifact_root": "/workspace/huyawo-quant/artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002",
+  "automatic_retry_permitted": false,
+  "backend": "llm_compressor",
+  "backend_version": "0.14.0",
+  "git_head": "de81eb4a12df17a7a4dbc86370e47250dbcbb8ea",
+  "quantization_attempt_consumed": true,
+  "quantization_attempt_started": true,
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261004-002",
+  "scheme": "w4a16",
+  "timestamp_utc": "2026-10-04T22:25:37.685642+00:00"
+}

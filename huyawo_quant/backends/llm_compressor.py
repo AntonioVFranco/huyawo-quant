@@ -152,6 +152,7 @@ def build_llm_compressor_oneshot_kwargs(
     *,
     plan: QuantPlan,
     native_recipe: object,
+    model_source: str | Path | None = None,
     dataset: object | None = None,
     output_dir: str | Path | None = None,
     save_compressed: bool = True,
@@ -165,8 +166,10 @@ def build_llm_compressor_oneshot_kwargs(
     if native_recipe is None:
         raise ValueError("native_recipe must not be None")
 
+    resolved_model_source = str(model_source) if model_source is not None else plan.model.model_id
+
     kwargs: dict[str, object] = {
-        "model": plan.model.model_id,
+        "model": resolved_model_source,
         "model_revision": plan.model.resolved_revision,
         "recipe": native_recipe,
         "dataset": dataset,

@@ -438,3 +438,31 @@ def test_translate_failure_maps_backend_exception(
     assert failure.category == category
     assert type(error).__name__ in failure.message
     assert str(error) in failure.message
+
+
+def test_build_oneshot_kwargs_uses_explicit_model_source_without_mutating_plan_identity(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr(
+        backend,
+        "get_llm_compressor_version",
+        lambda: "0.14.0",
+    )
+
+    plan = _make_plan()
+    native_recipe = object()
+    model_source = tmp_path / "snapshot"
+    model_source.mkdir()
+
+    kwargs = build_llm_compressor_oneshot_kwargs(
+        plan=plan,
+        native_recipe=native_recipe,
+        model_source=model_source,
+    )
+
+    assert plan.model.model_id == "org/model"
+    assert plan.model.resolved_revision == "a" * 40
+    assert kwargs["model"] == str(model_source)
+    assert kwargs["model_revision"] == "a" * 40
+    assert kwargs["recipe"] is native_recipe

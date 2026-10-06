@@ -297,6 +297,8 @@ def _resolve_project_root() -> Path:
 
 def _validate_execution_context(
     project_root: Path,
+    *,
+    expected_virtual_environment: str | os.PathLike[str] | None = None,
 ) -> tuple[Path, Path, Path]:
     working_directory = Path.cwd().resolve()
 
@@ -309,10 +311,28 @@ def _validate_execution_context(
         raise RuntimeError("VIRTUAL_ENV is not set for EnvironmentFingerprint capture")
 
     virtual_environment = Path(virtual_environment_value).resolve()
-    expected_virtual_environment = (project_root / ".venv").resolve()
 
-    if virtual_environment != expected_virtual_environment:
-        raise RuntimeError("EnvironmentFingerprint capture requires the project-local .venv")
+    if expected_virtual_environment is None:
+        resolved_expected_virtual_environment = (project_root / ".venv").resolve()
+    else:
+        resolved_project_root = project_root.resolve()
+        resolved_expected_virtual_environment = Path(expected_virtual_environment).resolve()
+
+        if resolved_expected_virtual_environment == resolved_project_root:
+            raise RuntimeError(
+                "expected virtual environment must not equal the Huyawo Quant project root"
+            )
+
+        if not resolved_expected_virtual_environment.is_relative_to(resolved_project_root):
+            raise RuntimeError(
+                "expected virtual environment is outside the Huyawo Quant project root"
+            )
+
+    if virtual_environment != resolved_expected_virtual_environment:
+        if expected_virtual_environment is None:
+            raise RuntimeError("EnvironmentFingerprint capture requires the project-local .venv")
+
+        raise RuntimeError("active VIRTUAL_ENV does not match expected virtual environment")
 
     python_executable = Path(os.path.abspath(sys.executable))
 
@@ -329,6 +349,7 @@ def _validate_execution_context(
 def capture_environment_fingerprint(
     *,
     captured_at: datetime | None = None,
+    expected_virtual_environment: str | os.PathLike[str] | None = None,
 ) -> EnvironmentFingerprint:
     """Capture one validated fingerprint without mutating project state."""
 
@@ -337,7 +358,10 @@ def capture_environment_fingerprint(
         working_directory,
         virtual_environment,
         python_executable,
-    ) = _validate_execution_context(project_root)
+    ) = _validate_execution_context(
+        project_root,
+        expected_virtual_environment=expected_virtual_environment,
+    )
 
     nvidia_smi_path = shutil.which("nvidia-smi")
 

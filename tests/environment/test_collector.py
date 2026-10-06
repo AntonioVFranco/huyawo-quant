@@ -268,3 +268,233 @@ def test_execution_context_preserves_venv_interpreter_symlink(
     assert captured_virtual_environment == virtual_environment
     assert captured_python_executable == python_executable
     assert captured_python_executable.resolve() == system_python.resolve()
+
+
+def test_execution_context_legacy_rejects_sibling_virtual_environment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_root = tmp_path / "huyawo-quant"
+    virtual_environment = project_root / ".venv-runtime"
+    bin_directory = virtual_environment / "bin"
+    bin_directory.mkdir(parents=True)
+
+    python_executable = bin_directory / "python"
+    python_executable.write_text("placeholder")
+
+    monkeypatch.chdir(project_root)
+    monkeypatch.setenv(
+        "VIRTUAL_ENV",
+        str(virtual_environment),
+    )
+    monkeypatch.setattr(
+        "huyawo_quant.environment.collector.sys.executable",
+        str(python_executable),
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="project-local \\.venv",
+    ):
+        collector._validate_execution_context(project_root)
+
+
+def test_execution_context_accepts_explicit_sibling_virtual_environment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_root = tmp_path / "huyawo-quant"
+    virtual_environment = project_root / ".venv-runtime"
+    bin_directory = virtual_environment / "bin"
+    bin_directory.mkdir(parents=True)
+
+    system_python = tmp_path / "system-python"
+    system_python.write_text("placeholder")
+
+    python_executable = bin_directory / "python"
+    python_executable.symlink_to(system_python)
+
+    monkeypatch.chdir(project_root)
+    monkeypatch.setenv(
+        "VIRTUAL_ENV",
+        str(virtual_environment),
+    )
+    monkeypatch.setattr(
+        "huyawo_quant.environment.collector.sys.executable",
+        str(python_executable),
+    )
+
+    (
+        working_directory,
+        captured_virtual_environment,
+        captured_python_executable,
+    ) = collector._validate_execution_context(
+        project_root,
+        expected_virtual_environment=str(virtual_environment),
+    )
+
+    assert working_directory == project_root
+    assert captured_virtual_environment == virtual_environment
+    assert captured_python_executable == python_executable
+    assert captured_python_executable.resolve() == system_python.resolve()
+
+
+def test_capture_rejects_expected_virtual_environment_outside_project(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_root = tmp_path / "huyawo-quant"
+    virtual_environment = project_root / ".venv-runtime"
+    outside_environment = tmp_path / "outside-runtime"
+
+    bin_directory = virtual_environment / "bin"
+    bin_directory.mkdir(parents=True)
+
+    python_executable = bin_directory / "python"
+    python_executable.write_text("placeholder")
+
+    monkeypatch.chdir(project_root)
+    monkeypatch.setenv(
+        "VIRTUAL_ENV",
+        str(virtual_environment),
+    )
+    monkeypatch.setattr(
+        collector,
+        "_resolve_project_root",
+        lambda: project_root,
+    )
+    monkeypatch.setattr(
+        "huyawo_quant.environment.collector.sys.executable",
+        str(python_executable),
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="expected virtual environment is outside",
+    ):
+        collector.capture_environment_fingerprint(
+            expected_virtual_environment=outside_environment,
+        )
+
+
+def test_execution_context_rejects_project_root_as_expected_environment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_root = tmp_path / "huyawo-quant"
+    bin_directory = project_root / "bin"
+    bin_directory.mkdir(parents=True)
+
+    python_executable = bin_directory / "python"
+    python_executable.write_text("placeholder")
+
+    monkeypatch.chdir(project_root)
+    monkeypatch.setenv(
+        "VIRTUAL_ENV",
+        str(project_root),
+    )
+    monkeypatch.setattr(
+        "huyawo_quant.environment.collector.sys.executable",
+        str(python_executable),
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="must not equal the Huyawo Quant project root",
+    ):
+        collector._validate_execution_context(
+            project_root,
+            expected_virtual_environment=project_root,
+        )
+
+
+def test_execution_context_rejects_active_virtual_environment_mismatch(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_root = tmp_path / "huyawo-quant"
+    active_environment = project_root / ".venv-active"
+    expected_environment = project_root / ".venv-expected"
+
+    active_bin_directory = active_environment / "bin"
+    active_bin_directory.mkdir(parents=True)
+    expected_environment.mkdir(parents=True)
+
+    python_executable = active_bin_directory / "python"
+    python_executable.write_text("placeholder")
+
+    monkeypatch.chdir(project_root)
+    monkeypatch.setenv(
+        "VIRTUAL_ENV",
+        str(active_environment),
+    )
+    monkeypatch.setattr(
+        "huyawo_quant.environment.collector.sys.executable",
+        str(python_executable),
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="does not match expected virtual environment",
+    ):
+        collector._validate_execution_context(
+            project_root,
+            expected_virtual_environment=expected_environment,
+        )
+
+
+def test_execution_context_rejects_python_outside_active_environment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_root = tmp_path / "huyawo-quant"
+    virtual_environment = project_root / ".venv-runtime"
+    virtual_environment.mkdir(parents=True)
+
+    python_executable = tmp_path / "outside-python"
+    python_executable.write_text("placeholder")
+
+    monkeypatch.chdir(project_root)
+    monkeypatch.setenv(
+        "VIRTUAL_ENV",
+        str(virtual_environment),
+    )
+    monkeypatch.setattr(
+        "huyawo_quant.environment.collector.sys.executable",
+        str(python_executable),
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match="Python executable is outside the active project virtual environment",
+    ):
+        collector._validate_execution_context(
+            project_root,
+            expected_virtual_environment=virtual_environment,
+        )
+
+
+def test_environment_fingerprint_serialization_shape_is_unchanged() -> None:
+    properties = collector.EnvironmentFingerprint.model_json_schema()["properties"]
+
+    assert tuple(properties) == (
+        "captured_at",
+        "project_root",
+        "working_directory",
+        "virtual_environment",
+        "python_executable",
+        "python_version",
+        "python_implementation",
+        "python_prefix",
+        "python_base_prefix",
+        "platform_system",
+        "platform_release",
+        "platform_machine",
+        "platform_version",
+        "cuda_visible_devices",
+        "cuda_device_order",
+        "python_distributions",
+        "nvidia_smi_path",
+        "nvidia_gpus",
+        "cuda_toolkit",
+    )

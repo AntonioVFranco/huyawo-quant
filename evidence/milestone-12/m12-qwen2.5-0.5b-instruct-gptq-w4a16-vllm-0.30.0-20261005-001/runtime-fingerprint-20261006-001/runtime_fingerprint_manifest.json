@@ -1,0 +1,70 @@
+{
+  "created_at": "2026-10-06T14:28:41.056411+00:00",
+  "evidence_id": "runtime-fingerprint-20261006-001",
+  "evidence_kind": "m12_runtime_fingerprint_host_rebind",
+  "execution_boundary": {
+    "m11_artifact_present": false,
+    "model_load_executed": false,
+    "quantization_executed": false,
+    "vllm_generation_executed": false,
+    "vllm_model_load_executed": false
+  },
+  "files": [
+    {
+      "path": "environment_fingerprint.json",
+      "sha256": "e1acbe15c1db97baa1b7272ee5fbf4988f407fce90b515458aedd54d27e68ca6",
+      "size_bytes": 7103
+    },
+    {
+      "path": "runtime_state.txt",
+      "sha256": "35432e68864abd50a4296557a3764cbc326ea0149fa1f2afdd603d2e905ee0e1",
+      "size_bytes": 4211
+    },
+    {
+      "path": "pip_check.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "size_bytes": 30
+    },
+    {
+      "path": "nvidia_smi.txt",
+      "sha256": "8a166c64b2fc4098386e3c97a7d4c3e3a4d64ba7da6a40ce7bca8646c5faa61d",
+      "size_bytes": 105
+    }
+  ],
+  "fingerprint": {
+    "captured_at": "2026-10-06T14:06:27.024343+00:00",
+    "path": "environment_fingerprint.json",
+    "sha256": "e1acbe15c1db97baa1b7272ee5fbf4988f407fce90b515458aedd54d27e68ca6",
+    "size_bytes": 7103
+  },
+  "hardware": {
+    "compute_capability_major": 8,
+    "compute_capability_minor": 6,
+    "driver_version": "580.142",
+    "memory_total_mib": 20470,
+    "name": "NVIDIA RTX A4500",
+    "pci_bus_id": "00000000:01:00.0",
+    "uuid": "GPU-4a2a7562-e89e-0ed4-e1f2-eae6c0cdd89c"
+  },
+  "run_id": "m12-qwen2.5-0.5b-instruct-gptq-w4a16-vllm-0.30.0-20261005-001",
+  "runtime": {
+    "compressed_tensors_version": "0.17.0",
+    "current_runtime_state_sha256": "35432e68864abd50a4296557a3764cbc326ea0149fa1f2afdd603d2e905ee0e1",
+    "distribution_count": 199,
+    "historical_runtime_state_byte_parity": true,
+    "historical_runtime_state_sha256": "35432e68864abd50a4296557a3764cbc326ea0149fa1f2afdd603d2e905ee0e1",
+    "torch_version": "2.13.0",
+    "transformers_version": "5.18.0",
+    "triton_version": "3.7.1",
+    "virtual_environment": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0",
+    "vllm_version": "0.30.0"
+  },
+  "schema_version": "1",
+  "source": {
+    "capture_bytes_match_durable_checkpoint": true,
+    "capture_time_repository_head": "42c2d71b465c0172878d5c4cfb064b5473aa3a18",
+    "collector_sha256": "2ca4185fe4b3ea0e47fe84e55b5e039b93177f8fd818cee073794b789f8a93b2",
+    "durable_repository_checkpoint": "4e27eef54bf6523738ee4ae1f023760fd580b782",
+    "test_collector_sha256": "b140acef01196fb661745db9c882100be7336291531ff16dabe4bab4fb08aa37"
+  }
+}

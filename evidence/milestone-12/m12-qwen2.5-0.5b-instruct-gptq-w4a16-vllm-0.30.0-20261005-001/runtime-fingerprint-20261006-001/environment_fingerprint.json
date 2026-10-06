@@ -1,0 +1,362 @@
+{
+  "captured_at": "2026-10-06T14:06:27.024343Z",
+  "project_root": "/workspace/huyawo-quant",
+  "working_directory": "/workspace/huyawo-quant",
+  "virtual_environment": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0",
+  "python_executable": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0/bin/python",
+  "python_version": "3.12.3",
+  "python_implementation": "CPython",
+  "python_prefix": "/workspace/huyawo-quant/.venv-m12-vllm-0.30.0",
+  "python_base_prefix": "/usr",
+  "platform_system": "Linux",
+  "platform_release": "6.17.0-22-generic",
+  "platform_machine": "x86_64",
+  "platform_version": "#22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2",
+  "cuda_visible_devices": null,
+  "cuda_device_order": null,
+  "python_distributions": [
+    {
+      "name": "absl-py",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "accelerate",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "aiohappyeyeballs",
+      "status": "INSTALLED",
+      "version": "2.7.1"
+    },
+    {
+      "name": "aiohttp",
+      "status": "INSTALLED",
+      "version": "3.14.4"
+    },
+    {
+      "name": "aiosignal",
+      "status": "INSTALLED",
+      "version": "1.4.0"
+    },
+    {
+      "name": "attrs",
+      "status": "INSTALLED",
+      "version": "26.1.0"
+    },
+    {
+      "name": "bitsandbytes",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "chardet",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "charset-normalizer",
+      "status": "INSTALLED",
+      "version": "3.5.2"
+    },
+    {
+      "name": "cloudpickle",
+      "status": "INSTALLED",
+      "version": "3.1.2"
+    },
+    {
+      "name": "colorama",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "dataproperty",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "datasets",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "defusedxml",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "dill",
+      "status": "INSTALLED",
+      "version": "0.4.1"
+    },
+    {
+      "name": "evaluate",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "frozenlist",
+      "status": "INSTALLED",
+      "version": "1.8.0"
+    },
+    {
+      "name": "fsspec",
+      "status": "INSTALLED",
+      "version": "2026.9.0"
+    },
+    {
+      "name": "gptqmodel",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "huggingface-hub",
+      "status": "INSTALLED",
+      "version": "1.33.0"
+    },
+    {
+      "name": "joblib",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "llmcompressor",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "lm-eval",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "lxml",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "mbstrdecoder",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "more-itertools",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "multidict",
+      "status": "INSTALLED",
+      "version": "6.9.1"
+    },
+    {
+      "name": "multiprocess",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "mypy",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "narwhals",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "nltk",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "pandas",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "pathvalidate",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "peft",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "portalocker",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "propcache",
+      "status": "INSTALLED",
+      "version": "0.5.4"
+    },
+    {
+      "name": "psutil",
+      "status": "INSTALLED",
+      "version": "7.2.2"
+    },
+    {
+      "name": "pyarrow",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "pydantic",
+      "status": "INSTALLED",
+      "version": "2.13.5"
+    },
+    {
+      "name": "pytablewriter",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "pytest",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "python-dateutil",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "pytz",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "requests",
+      "status": "INSTALLED",
+      "version": "2.34.2"
+    },
+    {
+      "name": "rouge-score",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "ruff",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "sacrebleu",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "scikit-learn",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "scipy",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "six",
+      "status": "INSTALLED",
+      "version": "1.17.0"
+    },
+    {
+      "name": "sqlitedict",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "tabledata",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "tabulate",
+      "status": "INSTALLED",
+      "version": "0.10.0"
+    },
+    {
+      "name": "tcolorpy",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "threadpoolctl",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "tokenizers",
+      "status": "INSTALLED",
+      "version": "0.23.2"
+    },
+    {
+      "name": "torch",
+      "status": "INSTALLED",
+      "version": "2.13.0"
+    },
+    {
+      "name": "torchao",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "transformers",
+      "status": "INSTALLED",
+      "version": "5.18.0"
+    },
+    {
+      "name": "typepy",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "urllib3",
+      "status": "INSTALLED",
+      "version": "2.8.0"
+    },
+    {
+      "name": "vllm",
+      "status": "INSTALLED",
+      "version": "0.30.0"
+    },
+    {
+      "name": "word2number",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "xxhash",
+      "status": "ABSENT",
+      "version": null
+    },
+    {
+      "name": "yarl",
+      "status": "INSTALLED",
+      "version": "1.25.1"
+    }
+  ],
+  "nvidia_smi_path": "/usr/bin/nvidia-smi",
+  "nvidia_gpus": [
+    {
+      "observed_index": 0,
+      "name": "NVIDIA RTX A4500",
+      "uuid": "GPU-4a2a7562-e89e-0ed4-e1f2-eae6c0cdd89c",
+      "pci_bus_id": "00000000:01:00.0",
+      "memory_total_mib": 20470,
+      "driver_version": "580.142",
+      "compute_capability_major": 8,
+      "compute_capability_minor": 6
+    }
+  ],
+  "cuda_toolkit": {
+    "nvcc_path": "/usr/local/cuda/bin/nvcc",
+    "release": "12.8",
+    "version": "12.8.93"
+  }
+}

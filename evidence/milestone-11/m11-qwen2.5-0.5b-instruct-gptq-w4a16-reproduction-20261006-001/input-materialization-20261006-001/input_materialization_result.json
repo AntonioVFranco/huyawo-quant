@@ -1,0 +1,38 @@
+{
+  "completed_at": "2026-10-06T15:31:53.699075+00:00",
+  "identity_match": {
+    "calibration_source_exact_historical_files": true,
+    "canonical_dataloader": true,
+    "model_snapshot_exact_historical_files": true,
+    "persisted_dataset_fingerprint": true,
+    "source_dataset_fingerprint": true,
+    "source_persisted_content_equal": true,
+    "tokenizer_identity": true
+  },
+  "next_boundary": {
+    "artifact_creation_authorized": false,
+    "materialization_complete": true,
+    "network_required_for_quantization": false,
+    "substantive_quantization_authorized": false,
+    "vllm_runtime_validation_authorized": false
+  },
+  "record_type": "m11_reproduction_input_materialization_result",
+  "repository_head": "6ab5f9bca499cb7011ff858dbfaae3181c29f990",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001",
+  "schema_version": "m11-reproduction-input-materialization-result-v1",
+  "source_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "state": {
+    "artifact_created": false,
+    "calibration_forward_pass_executed": false,
+    "calibration_preparation_executed": true,
+    "dataset_materialized": true,
+    "dataset_saved_locally": true,
+    "model_loaded": false,
+    "model_snapshot_materialized": true,
+    "network_started": true,
+    "quantization_attempt_consumed": false,
+    "quantization_started": false,
+    "tokenizer_loaded": true
+  },
+  "status": "PASS"
+}

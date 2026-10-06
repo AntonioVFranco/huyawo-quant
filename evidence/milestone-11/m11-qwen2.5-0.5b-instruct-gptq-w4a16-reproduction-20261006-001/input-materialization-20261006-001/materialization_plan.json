@@ -1,0 +1,44 @@
+{
+  "environment_fingerprint": {
+    "relative_role": "current_host_environment",
+    "sha256": "d6b645e802b7a2c084e4b692c6e36b6b8d7c9390a059ed944dbea90d947e5fb3"
+  },
+  "network_sources": {
+    "dataset": {
+      "repo_id": "HuggingFaceH4/ultrachat_200k",
+      "revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+      "split_expression": "train_sft[:512]"
+    },
+    "model": {
+      "repo_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+    }
+  },
+  "operations": {
+    "artifact_creation": false,
+    "artifact_load": false,
+    "calibration_forward_pass": false,
+    "calibration_preparation": true,
+    "dataset_download": true,
+    "dataset_local_persistence": true,
+    "generation": false,
+    "model_load": false,
+    "model_snapshot_download": true,
+    "quantization": false,
+    "tokenizer_load": true,
+    "vllm_runtime_validation": false
+  },
+  "record_type": "m11_reproduction_input_materialization_plan",
+  "repository_head": "6ab5f9bca499cb7011ff858dbfaae3181c29f990",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001",
+  "runtime_cache": {
+    "calibration_source_root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/calibration-source-512",
+    "hf_datasets_cache": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/hf-home/datasets",
+    "hf_home": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/hf-home",
+    "hf_hub_cache": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/hf-home/hub",
+    "root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001"
+  },
+  "schema_version": "m11-reproduction-input-materialization-v1",
+  "source_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "started_at": "2026-10-06T15:31:21.023630+00:00"
+}

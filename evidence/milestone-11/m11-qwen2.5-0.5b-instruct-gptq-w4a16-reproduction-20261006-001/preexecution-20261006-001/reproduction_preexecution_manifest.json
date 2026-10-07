@@ -1,0 +1,111 @@
+{
+  "created_at": "2026-10-07T17:49:47.860876Z",
+  "declared_target_runtime": {
+    "runtime": "vllm",
+    "validated": false,
+    "validation_milestone": 12,
+    "version": "0.30.0"
+  },
+  "execution_authority": {
+    "reason": "Pending explicit founder authorization after preexecution evidence review and remote checkpoint.",
+    "substantive_quantization_authorized": false
+  },
+  "execution_state": {
+    "artifact_load_executed": false,
+    "artifact_save_executed": false,
+    "calibration_forward_pass_executed": false,
+    "model_generation_executed": false,
+    "model_load_executed": false,
+    "quantization_executed": false,
+    "runtime_validation_executed": false
+  },
+  "governance": {
+    "artifact_recovery_policy": "RFC-QUANT-0025",
+    "hardware_evidence_policy": "RFC-QUANT-0026"
+  },
+  "planned_execution": {
+    "algorithm": "gptq",
+    "all_local_binding_must_complete_before_start_marker": true,
+    "artifact_root": "/workspace/huyawo-quant/artifacts/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001",
+    "artifact_root_must_be_absent_before_start": true,
+    "attempt_budget": 1,
+    "attempt_consumed": false,
+    "automatic_retry_permitted_after_start": false,
+    "automatic_retry_permitted_before_start": true,
+    "backend": "llm_compressor",
+    "backend_version": "0.14.0",
+    "calibration_dataloader_sha256": "5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+    "calibration_source": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/calibration-source-512",
+    "execution_call": "execute_llm_compressor_oneshot(kwargs=resolved_kwargs)",
+    "model_source": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/hf-home/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+    "reflection_between_start_marker_and_execute_call_permitted": false,
+    "scheme": "w4a16"
+  },
+  "protocol_inputs": {
+    "calibration_manifest": {
+      "relative_path": "calibration_manifest.json",
+      "reused_byte_for_byte_from_source_run": true,
+      "sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3"
+    },
+    "environment_fingerprint": {
+      "fresh_current_host_capture": true,
+      "relative_path": "environment_fingerprint.json",
+      "reused_byte_for_byte_from_source_run": false,
+      "sha256": "d0f84c43d876ce6632d262b27b35ad9cb852f3e73ef2a79c24179bf15d5aba3d"
+    },
+    "quant_plan": {
+      "relative_path": "quant_plan.json",
+      "reused_byte_for_byte_from_source_run": true,
+      "sha256": "f9fea9fd223f9b8177c3755901eb46b704e6b7845ad9322eb4b5d1dde633929e"
+    },
+    "reproduction_input_authority": {
+      "relative_path": "reproduction_input_authority.json",
+      "sha256": "24d974016ca90b7ed4df0a4bababaa8e89ec321e36ffef8c4ca223d806ddfa23"
+    }
+  },
+  "record_type": "m11_reproduction_preexecution_manifest",
+  "reference_compatibility_runtime": {
+    "milestone": 11,
+    "runtime": "transformers",
+    "version": "5.17.0"
+  },
+  "repository": {
+    "branch": "main",
+    "head": "cc674127642df1502d12b619884aeed9821841fd"
+  },
+  "required_preboundary_checks": [
+    "verify reproduction preexecution SHA-256 identities",
+    "verify current-host EnvironmentFingerprint identity",
+    "verify reproduction input-materialization SHA-256 identities",
+    "verify live model snapshot exact file manifest",
+    "verify live persisted calibration-source exact file manifest",
+    "rebuild deterministic calibration DataLoader",
+    "require DataLoader identity 5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+    "build native GPTQ W4A16 recipe",
+    "build resolved oneshot kwargs with explicit current local model source",
+    "require resolved kwargs.model equals the canonical reproduction snapshot path",
+    "verify artifact root remains absent",
+    "write execution preboundary evidence",
+    "write irreversible attempt-start marker",
+    "immediately call execute_llm_compressor_oneshot(kwargs=resolved_kwargs)"
+  ],
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001",
+  "schema_version": "m11-reproduction-preexecution-v1",
+  "source_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "state": "PREEXECUTION_FROZEN",
+  "success_criteria": [
+    "quantization executes at most once for this reproduction run_id",
+    "compressed artifact save completes",
+    "QuantArtifactIdentity is built from exact artifact bytes",
+    "independent artifact identity verification passes",
+    "reproduced artifact identity is compared with the historical accepted artifact identity",
+    "a differing reproduced artifact identity is preserved as a new candidate rather than relabeling historical bytes",
+    "local-only Transformers reload passes",
+    "bounded deterministic generation produces at least one new token",
+    "generation does not exceed max_new_tokens",
+    "post-validation artifact identity remains unchanged",
+    "any artifact_save failure is preserved",
+    "any artifact_load failure is preserved",
+    "no vLLM deployability claim is made before Milestone 12 validation"
+  ]
+}

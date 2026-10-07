@@ -1,0 +1,124 @@
+{
+  "canonical_inputs": {
+    "calibration_preparation": {
+      "dataloader": {
+        "batch_count": 512,
+        "max_observed_sequence_length": 2048,
+        "sha256": "5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+        "total_attention_tokens": 580543
+      },
+      "identity_record": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/calibration_preparation_rebind.json",
+        "sha256": "ca9b472c08102511f94369af11ef923bb1276d260c15a90c038c28989addd005"
+      },
+      "replay_verified_before_preexecution": true
+    },
+    "calibration_source": {
+      "dataset_id": "HuggingFaceH4/ultrachat_200k",
+      "identity_record": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/calibration_source_rebind.json",
+        "sha256": "3e7657f1014884e2de8a025648f57a086f3998762d5505307d89b2651305eacc"
+      },
+      "live_manifest_verified": true,
+      "persisted_root": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/calibration-source-512",
+      "revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+      "row_count": 512,
+      "source_content_sha256": "477d33c976c3213741b73918c63d0563073c297423b69843eeb1550cae5ae2e5"
+    },
+    "model_snapshot": {
+      "file_count": 10,
+      "identity_record": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/model_snapshot_rebind.json",
+        "sha256": "729ee60a63cbfad939112b0e1f9ca515fe5e70737cfd14e1e98ea3fff620c038"
+      },
+      "live_manifest_verified": true,
+      "offline_complete": true,
+      "repo_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+      "snapshot_path": "/workspace/huyawo-quant/.venv/m11-runtime/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/hf-home/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775"
+    }
+  },
+  "current_host_environment": {
+    "fresh_run_scoped_capture": true,
+    "historical_environment_reused_byte_for_byte": false,
+    "preexecution_relative_path": "environment_fingerprint.json",
+    "sha256": "d0f84c43d876ce6632d262b27b35ad9cb852f3e73ef2a79c24179bf15d5aba3d",
+    "software_equivalent_to_reproduction_input_environment": true
+  },
+  "execution_readiness": {
+    "attempt_budget": 1,
+    "attempt_consumed": false,
+    "input_materialization_complete": true,
+    "network_required_for_quantization": false,
+    "substantive_quantization_authorized": false
+  },
+  "governance": {
+    "artifact_recovery_policy": "RFC-QUANT-0025",
+    "artifact_recovery_policy_status": "ACCEPTED",
+    "hardware_evidence_policy": "RFC-QUANT-0026",
+    "hardware_evidence_policy_status": "ACCEPTED",
+    "historical_run_reopened": false
+  },
+  "historical_protocol_authority": {
+    "calibration_manifest": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/calibration_manifest.json",
+      "reused_byte_for_byte": true,
+      "sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3"
+    },
+    "preexecution_checksums": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/PREEXECUTION_SHA256SUMS",
+      "sha256": "b10f09a6a86ec153d4ca71453eff5bd21f3b29ad25bf44f6c6be183e87508568"
+    },
+    "quant_plan": {
+      "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003/quant_plan.json",
+      "reused_byte_for_byte": true,
+      "sha256": "f9fea9fd223f9b8177c3755901eb46b704e6b7845ad9322eb4b5d1dde633929e"
+    }
+  },
+  "input_materialization": {
+    "records": {
+      "SHA256SUMS": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/SHA256SUMS",
+        "sha256": "ae3d0357633666668f0235d615761fde39ee973fefa5ac022caf0ba1080313f1"
+      },
+      "calibration_preparation_rebind.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/calibration_preparation_rebind.json",
+        "sha256": "ca9b472c08102511f94369af11ef923bb1276d260c15a90c038c28989addd005"
+      },
+      "calibration_source_rebind.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/calibration_source_rebind.json",
+        "sha256": "3e7657f1014884e2de8a025648f57a086f3998762d5505307d89b2651305eacc"
+      },
+      "environment_fingerprint.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/environment_fingerprint.json",
+        "sha256": "d6b645e802b7a2c084e4b692c6e36b6b8d7c9390a059ed944dbea90d947e5fb3"
+      },
+      "input_materialization_result.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/input_materialization_result.json",
+        "sha256": "6c66a601156d389641e0ab018de0ce737562b6c5f96539c93e263952592f8463"
+      },
+      "materialization_plan.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/materialization_plan.json",
+        "sha256": "ccb0ae1d393a48eee523de547f1b2c25eb91bc8a72c35e786913e16517521a6e"
+      },
+      "model_snapshot_rebind.json": {
+        "relative_path": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001/model_snapshot_rebind.json",
+        "sha256": "729ee60a63cbfad939112b0e1f9ca515fe5e70737cfd14e1e98ea3fff620c038"
+      }
+    },
+    "root": "evidence/milestone-11/m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001/input-materialization-20261006-001"
+  },
+  "record_type": "m11_reproduction_input_authority",
+  "recorded_at": "2026-10-07T17:49:47.860876Z",
+  "repository_head": "cc674127642df1502d12b619884aeed9821841fd",
+  "reuse_policy": {
+    "artifact_root_create_once": true,
+    "fresh_run_scoped_environment_required": true,
+    "historical_protocol_records_are_immutable": true,
+    "historical_run_id_relabeling_permitted": false,
+    "live_input_identity_verification_required": true
+  },
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001",
+  "schema_version": "m11-reproduction-input-authority-v1",
+  "source_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003"
+}

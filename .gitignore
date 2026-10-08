@@ -12,3 +12,8 @@ dist/
 .env
 .env.*
 !.env.example
+
+/artifacts/
+/.private-artifacts/
+/.tools/
+/.venv-*/

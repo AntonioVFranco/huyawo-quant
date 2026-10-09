@@ -1,0 +1,114 @@
+{
+  "calibration": {
+    "dataset_id": "HuggingFaceH4/ultrachat_200k",
+    "files": [
+      {
+        "relative_path": "data-00000-of-00001.arrow",
+        "sha256": "75e39ea7d095c70def4c30f56c703dc3116c4bf8b9950110354032721f2344f4",
+        "size_bytes": 3311584
+      },
+      {
+        "relative_path": "dataset_info.json",
+        "sha256": "3b77fe977f97b1d935332d3df4ac43319d293becddc24dd42529147ffac9453d",
+        "size_bytes": 1546
+      },
+      {
+        "relative_path": "state.json",
+        "sha256": "a64be4a3b0317782dcbdea89b31ebcdada4053575e2533f16b3b53d49e8de7f5",
+        "size_bytes": 260
+      }
+    ],
+    "fresh_dataloader_replay_required": true,
+    "historical_dataloader_sha256": "5c39e19bb21ae9582eed09205f596193f7de7855d8fb7bbc980275df39e54629",
+    "revision": "8049631c405ae6576f93f445c6b8166f76f5505a"
+  },
+  "calibration_manifest_sha256": "61312840571dcc1a7b68c6c0a8631024be5d667dd56b2fa6cfd1db67dd07a8c3",
+  "created_at_utc": "2026-10-09T18:47:02.369124+00:00",
+  "environment_fingerprint_sha256": "eb5636bafa97c2a2e8b5d5b902034a9d5421d423938239ec31afc26f93784b6e",
+  "execution": {
+    "artifact_created": false,
+    "attempt_budget": 1,
+    "attempt_consumed": false,
+    "authorized": false,
+    "quantization_executed": false
+  },
+  "frozen_quant_plan_sha256": "abeec1cbda99e981cc1c9e2d47a4011056a16c6d27c32d7f4225e1bc355851bf",
+  "governance": {
+    "artifact_preservation": "RFC-QUANT-0025",
+    "hardware_portability": "RFC-QUANT-0026"
+  },
+  "historical_source_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-20261005-003",
+  "model": {
+    "files": [
+      {
+        "relative_path": ".gitattributes",
+        "sha256": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+        "size_bytes": 1519
+      },
+      {
+        "relative_path": "LICENSE",
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "size_bytes": 11343
+      },
+      {
+        "relative_path": "README.md",
+        "sha256": "b19c806a904db6dc878a0462e70b551f6b7ac78dfbb88c2eb966ca2b9109ae15",
+        "size_bytes": 4917
+      },
+      {
+        "relative_path": "config.json",
+        "sha256": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+        "size_bytes": 659
+      },
+      {
+        "relative_path": "generation_config.json",
+        "sha256": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6",
+        "size_bytes": 242
+      },
+      {
+        "relative_path": "merges.txt",
+        "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+        "size_bytes": 1671839
+      },
+      {
+        "relative_path": "model.safetensors",
+        "sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+        "size_bytes": 988097824
+      },
+      {
+        "relative_path": "tokenizer.json",
+        "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+        "size_bytes": 7031645
+      },
+      {
+        "relative_path": "tokenizer_config.json",
+        "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+        "size_bytes": 7305
+      },
+      {
+        "relative_path": "vocab.json",
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "size_bytes": 2776833
+      }
+    ],
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "preservation": {
+    "destination_class": "private_git_lfs",
+    "real_artifact_restored": false,
+    "real_artifact_uploaded": false,
+    "synthetic_roundtrip_verified": true
+  },
+  "prior_reproduction_run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-reproduction-20261006-001",
+  "private_staged_manifest_sha256": "ef1a243b7395bf7df6bc442cdb4aa74c9f311835a306cfdb0c9960ef2ed6f505",
+  "private_staged_sha256sums_sha256": "7976e01ce385d583496d7f2b08c128d8bca74ead85c56240ee2bf5ca38af0895",
+  "record_type": "public_safe_preexecution_checkpoint",
+  "run_id": "m11-qwen2.5-0.5b-instruct-gptq-w4a16-a4500-reproduction-20261009-001",
+  "runtime_validation": {
+    "runtime": "vllm",
+    "validated": false
+  },
+  "schema_version": "m12-public-preexecution-checkpoint-v1",
+  "source_repository_head": "836821da2e0dd8162e4abc8422656d5ddefde94e"
+}

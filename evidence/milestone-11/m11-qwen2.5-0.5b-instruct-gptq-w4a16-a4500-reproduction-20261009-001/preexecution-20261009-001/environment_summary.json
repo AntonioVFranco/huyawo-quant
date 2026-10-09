@@ -1,0 +1,14 @@
+{
+  "compute_capability": "8.6",
+  "device_count": 1,
+  "device_name": "NVIDIA RTX A4500",
+  "driver_version": "580.126.09",
+  "llmcompressor_version": "0.14.0",
+  "memory_bytes": 21016543232,
+  "python_version": "3.12.3",
+  "schema_version": "m12-public-environment-summary-v1",
+  "source_fingerprint_sha256": "eb5636bafa97c2a2e8b5d5b902034a9d5421d423938239ec31afc26f93784b6e",
+  "torch_cuda_version": "12.6",
+  "torch_version": "2.14.0+cu126",
+  "transformers_version": "5.17.0"
+}

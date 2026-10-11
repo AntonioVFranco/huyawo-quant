@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, cast
 
 import pytest
 from huyawo_quant.performance import orchestration
-from huyawo_quant.performance.execution import PerformanceTrialMeasurement
+from huyawo_quant.performance.execution import GenerationModel, PerformanceTrialMeasurement
+from huyawo_quant.performance.projection import build_performance_benchmark_result
+from huyawo_quant.performance.protocol import build_primary_workload_profile
 
 PROMPT_TOKEN_IDS = tuple(range(256))
 
@@ -43,7 +45,7 @@ def _measurement(index: int) -> PerformanceTrialMeasurement:
 def test_orchestration_preserves_protocol_order_and_projection_inputs(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    fake_model = object()
+    fake_model = cast(GenerationModel, object())
     resident_vram_bytes = 777_000_000
 
     warmup_trials = tuple(_measurement(index) for index in range(3))
@@ -54,7 +56,7 @@ def test_orchestration_preserves_protocol_order_and_projection_inputs(
     trial_index = 0
     captured_projection_kwargs: dict[str, Any] = {}
 
-    original_projection = orchestration.build_performance_benchmark_result
+    original_projection = build_performance_benchmark_result
 
     def fake_resident_reader(*, cuda_device_index: int) -> int:
         events.append("resident")
@@ -116,9 +118,7 @@ def test_orchestration_preserves_protocol_order_and_projection_inputs(
     assert result.torch_allocated_vram_bytes == resident_vram_bytes
     assert result.measured_trials == measured_trials
 
-    assert captured_projection_kwargs["workload_profile"] == (
-        orchestration.build_primary_workload_profile()
-    )
+    assert captured_projection_kwargs["workload_profile"] == (build_primary_workload_profile())
     assert captured_projection_kwargs["e2e_latency_seconds"] == tuple(
         trial.e2e_latency_seconds for trial in measured_trials
     )
@@ -159,7 +159,7 @@ def test_orchestration_preserves_protocol_order_and_projection_inputs(
 def test_orchestration_propagates_first_trial_failure_without_retry_or_projection(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    fake_model = object()
+    fake_model = cast(GenerationModel, object())
 
     events: list[str] = []
     trial_calls = 0

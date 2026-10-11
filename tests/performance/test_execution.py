@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, cast
 
 import pytest
 import torch
-from huyawo_quant.performance import execution
 from huyawo_quant.performance.execution import (
+    GenerationModel,
     read_torch_allocated_vram_bytes,
     run_measured_generation_trial,
 )
@@ -55,12 +55,12 @@ def _patch_cuda_for_trial(
     peak_bytes: int = 123456,
 ) -> None:
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "is_available",
         lambda: True,
     )
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "device_count",
         lambda: 1,
     )
@@ -76,17 +76,17 @@ def _patch_cuda_for_trial(
         return peak_bytes
 
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "synchronize",
         synchronize,
     )
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "reset_peak_memory_stats",
         reset_peak_memory_stats,
     )
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "max_memory_allocated",
         max_memory_allocated,
     )
@@ -109,7 +109,7 @@ def test_measured_trial_preserves_protocol_order_and_raw_measurements(
         return _REAL_TENSOR(data, dtype=dtype)
 
     monkeypatch.setattr(
-        execution.torch,
+        torch,
         "tensor",
         fake_tensor,
     )
@@ -193,7 +193,7 @@ def test_measured_trial_binds_start_before_generate(
         return _REAL_TENSOR(data, dtype=dtype)
 
     monkeypatch.setattr(
-        execution.torch,
+        torch,
         "tensor",
         fake_tensor,
     )
@@ -238,7 +238,7 @@ def test_measured_trial_rejects_training_model_before_cuda_access() -> None:
         match="model must be in evaluation mode",
     ):
         run_measured_generation_trial(
-            TrainingModel(),
+            cast(GenerationModel, TrainingModel()),
             prompt_token_ids=tuple(range(256)),
             cuda_device_index=0,
         )
@@ -272,7 +272,7 @@ def test_measured_trial_rejects_wrong_generated_output_shape(
         return _REAL_TENSOR(data, dtype=dtype)
 
     monkeypatch.setattr(
-        execution.torch,
+        torch,
         "tensor",
         fake_tensor,
     )
@@ -303,12 +303,12 @@ def test_read_torch_allocated_vram_bytes_uses_explicit_device(
     seen_devices: list[str] = []
 
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "is_available",
         lambda: True,
     )
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "device_count",
         lambda: 1,
     )
@@ -318,7 +318,7 @@ def test_read_torch_allocated_vram_bytes_uses_explicit_device(
         return 4096
 
     monkeypatch.setattr(
-        execution.torch.cuda,
+        torch.cuda,
         "memory_allocated",
         memory_allocated,
     )

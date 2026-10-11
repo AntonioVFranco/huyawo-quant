@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Literal, cast
 
 import huyawo_quant.backends.llm_compressor_recipes as recipes
 import pytest
@@ -42,10 +42,10 @@ class _FakeWeights:
         values.update(update)
 
         return _FakeWeights(
-            num_bits=values["num_bits"],
+            num_bits=cast(int, values["num_bits"]),
             type=values["type"],
-            symmetric=values["symmetric"],
-            group_size=values["group_size"],
+            symmetric=cast(bool, values["symmetric"]),
+            group_size=cast(int | None, values["group_size"]),
             strategy=values["strategy"],
         )
 
@@ -72,8 +72,8 @@ class _FakeScheme:
         )
 
         return _FakeScheme(
-            targets=list(targets),
-            weights=weights,
+            targets=list(cast(list[str], targets)),
+            weights=cast(_FakeWeights | None, weights),
             input_activations=self.input_activations,
             output_activations=self.output_activations,
         )
@@ -84,7 +84,7 @@ class _FakeModifier:
         self,
         **kwargs: object,
     ) -> None:
-        self.config_groups = kwargs["config_groups"]
+        self.config_groups = cast(dict[str, _FakeScheme], kwargs["config_groups"])
         self.ignore = kwargs["ignore"]
         self.requires_calibration_data = kwargs["requires_calibration_data"]
 
@@ -115,9 +115,9 @@ def _make_plan(
             resolved_revision="a" * 40,
         ),
         recipe=QuantRecipe(
-            algorithm=algorithm,
-            scheme=scheme,
-            weight_granularity=weight_granularity,
+            algorithm=cast(Literal["rtn", "gptq", "awq"], algorithm),
+            scheme=cast(Literal["w4a16", "w8a16", "w8a8_int8", "w8a8_fp8"], scheme),
+            weight_granularity=cast(Literal["tensor", "channel", "group"], weight_granularity),
             weight_group_size=weight_group_size,
             weight_symmetric=weight_symmetric,
             activation_mode=(

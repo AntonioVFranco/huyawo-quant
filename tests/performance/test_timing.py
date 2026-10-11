@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
+from typing import Any, cast
 
 import pytest
 import torch
@@ -342,7 +343,7 @@ def test_invalid_constructor_integer_boundaries_fail_closed(
     }
 
     with pytest.raises(ValueError):
-        TokenTimingStreamer(**kwargs)
+        TokenTimingStreamer(**cast(Any, kwargs))
 
 
 def test_deferred_generation_start_binding_preserves_timing_semantics() -> None:

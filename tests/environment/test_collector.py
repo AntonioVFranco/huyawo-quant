@@ -5,6 +5,7 @@ from importlib.metadata import PackageNotFoundError
 from pathlib import Path
 
 import pytest
+from huyawo_quant.contracts import EnvironmentFingerprint
 from huyawo_quant.environment import collector
 
 
@@ -475,7 +476,7 @@ def test_execution_context_rejects_python_outside_active_environment(
 
 
 def test_environment_fingerprint_serialization_shape_is_unchanged() -> None:
-    properties = collector.EnvironmentFingerprint.model_json_schema()["properties"]
+    properties = EnvironmentFingerprint.model_json_schema()["properties"]
 
     assert tuple(properties) == (
         "captured_at",

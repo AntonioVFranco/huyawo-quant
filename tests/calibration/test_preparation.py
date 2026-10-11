@@ -2,12 +2,19 @@ from __future__ import annotations
 
 import copy
 import json
+from collections.abc import Sequence
+from typing import Protocol, cast
 
 import huyawo_quant.calibration as calibration_package
 import pytest
 from huyawo_quant.calibration import prepare_calibration_dataloader
 from huyawo_quant.contracts import CalibrationManifest
 from torch.utils.data import DataLoader
+
+
+class _PreparedLoaderDataset(Protocol):
+    dataset: Sequence[dict[str, list[int]]]
+
 
 BASE_MANIFEST_PAYLOAD = {
     "dataset": {
@@ -165,7 +172,7 @@ def test_prepare_calibration_dataloader_replays_exact_sample_indices_in_order() 
     assert isinstance(loader, DataLoader)
     assert loader.batch_size == 1
     assert loader.num_workers == 0
-    assert len(loader.dataset) == 3
+    assert len(cast(_PreparedLoaderDataset, loader).dataset) == 3
     assert [call["text"] for call in tokenizer.tokenize_calls] == [
         "row-7",
         "row-2",
@@ -246,7 +253,7 @@ def test_prepare_calibration_dataloader_truncates_when_enabled() -> None:
         tokenizer=tokenizer,
     )
 
-    feature = loader.dataset[0]
+    feature = cast(_PreparedLoaderDataset, loader).dataset[0]
 
     assert len(feature["input_ids"]) == 3
     assert len(feature["attention_mask"]) == 3
@@ -284,7 +291,7 @@ def test_prepare_calibration_dataloader_accepts_token_budget_at_exact_cap() -> N
         tokenizer=tokenizer,
     )
 
-    assert len(loader.dataset) == 1
+    assert len(cast(_PreparedLoaderDataset, loader).dataset) == 1
 
 
 def test_prepare_calibration_dataloader_rejects_token_budget_overflow() -> None:
@@ -399,7 +406,7 @@ def test_prepare_calibration_dataloader_contains_only_token_features() -> None:
         tokenizer=tokenizer,
     )
 
-    feature = loader.dataset[0]
+    feature = cast(_PreparedLoaderDataset, loader).dataset[0]
 
     assert set(feature) == {
         "input_ids",
@@ -423,7 +430,9 @@ def test_prepare_calibration_dataloader_is_deterministic_for_same_inputs() -> No
         tokenizer=FakeTokenizer(),
     )
 
-    assert tuple(first.dataset) == tuple(second.dataset)
+    assert tuple(cast(_PreparedLoaderDataset, first).dataset) == tuple(
+        cast(_PreparedLoaderDataset, second).dataset
+    )
 
 
 def test_manifest_seed_and_shuffle_do_not_resample_replay() -> None:
@@ -458,4 +467,6 @@ def test_manifest_seed_and_shuffle_do_not_resample_replay() -> None:
         "row-2",
         "row-11",
     ]
-    assert tuple(first.dataset) == tuple(second.dataset)
+    assert tuple(cast(_PreparedLoaderDataset, first).dataset) == tuple(
+        cast(_PreparedLoaderDataset, second).dataset
+    )

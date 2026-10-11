@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError
 from pathlib import Path
+from typing import Any, Literal, cast
 
 import huyawo_quant.backends.llm_compressor as backend
 import pytest
@@ -34,8 +36,8 @@ def _make_recipe(
         "w8a16",
     }:
         return QuantRecipe(
-            algorithm=algorithm,
-            scheme=scheme,
+            algorithm=cast(Literal["rtn", "gptq", "awq"], algorithm),
+            scheme=cast(Literal["w4a16", "w8a16", "w8a8_int8", "w8a8_fp8"], scheme),
             weight_granularity="group",
             weight_group_size=128,
             weight_symmetric=True,
@@ -44,8 +46,8 @@ def _make_recipe(
         )
 
     return QuantRecipe(
-        algorithm=algorithm,
-        scheme=scheme,
+        algorithm=cast(Literal["rtn", "gptq", "awq"], algorithm),
+        scheme=cast(Literal["w4a16", "w8a16", "w8a8_int8", "w8a8_fp8"], scheme),
         weight_granularity="channel",
         weight_group_size=None,
         weight_symmetric=True,
@@ -83,7 +85,7 @@ def _make_plan(
             runtime="vllm",
             version="0.0.0-test",
         ),
-        backend=backend_name,
+        backend=cast(Literal["llm_compressor", "torchao"], backend_name),
         backend_version=backend_version,
         resolved_modules=("model.layers.0.self_attn.q_proj",),
     )
@@ -105,7 +107,7 @@ def test_get_llm_compressor_version_returns_none_when_absent(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     def missing(_name: str) -> str:
-        raise backend.PackageNotFoundError
+        raise PackageNotFoundError
 
     monkeypatch.setattr(
         backend,
@@ -342,7 +344,7 @@ def test_build_oneshot_kwargs_rejects_nonpositive_execution_limits(
         match="greater than zero",
     ):
         build_llm_compressor_oneshot_kwargs(
-            **arguments,
+            **cast(Any, arguments),
         )
 
 

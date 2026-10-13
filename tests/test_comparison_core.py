@@ -301,3 +301,110 @@ def test_different_benchmark_kinds_are_blocked() -> None:
     assert result["status"] == "BLOCKED"
     assert "BENCHMARK_KIND_MISMATCH" in _reasons(result)
     assert _deltas(result) == ()
+
+def test_cross_gpu_quality_matching_synthetic_bindings_remains_blocked() -> None:
+    result = _compare(
+        _quality(0.4),
+        _quality(0.5),
+        candidate_hardware=_hardware("NVIDIA RTX A5000"),
+    )
+
+    assert result["status"] == "BLOCKED"
+    assert _reasons(result) == ("HARDWARE_TARGET_MISMATCH",)
+    assert _deltas(result) == ()
+
+
+def test_cross_gpu_quality_spoofed_attestation_cannot_bypass_guard() -> None:
+    bindings = _bindings("quality")
+    bindings.update(
+        {
+            "source_attestation": "CERTIFIED",
+            "historical_scoring_source": "VERIFIED",
+            "historical_environment": "VERIFIED",
+            "cross_hardware_quality_approved": "true",
+        }
+    )
+
+    result = _compare(
+        _quality(0.4),
+        _quality(0.5),
+        candidate_hardware=_hardware("NVIDIA RTX A5000"),
+        baseline_bindings=bindings,
+        candidate_bindings=dict(bindings),
+    )
+
+    assert result["status"] == "BLOCKED"
+    assert "HARDWARE_TARGET_MISMATCH" in _reasons(result)
+    assert _deltas(result) == ()
+
+
+def test_cross_gpu_quality_missing_required_provenance_is_blocked() -> None:
+    bindings = _bindings("quality")
+    del bindings["task_config_sha256"]
+    del bindings["scoring_semantics"]
+
+    result = _compare(
+        _quality(0.4),
+        _quality(0.5),
+        candidate_hardware=_hardware("NVIDIA RTX A5000"),
+        baseline_bindings=bindings,
+        candidate_bindings=dict(bindings),
+    )
+
+    assert result["status"] == "BLOCKED"
+    assert _reasons(result) == (
+        "HARDWARE_TARGET_MISMATCH",
+        "PROTOCOL_BINDING_MISSING:scoring_semantics",
+        "PROTOCOL_BINDING_MISSING:task_config_sha256",
+    )
+    assert _deltas(result) == ()
+
+
+def test_cross_gpu_quality_runtime_mismatch_is_also_blocked() -> None:
+    result = _compare(
+        _quality(0.4),
+        _quality(0.5),
+        candidate_hardware=_hardware("NVIDIA RTX A5000"),
+        candidate_runtime=_runtime("vllm"),
+    )
+
+    assert result["status"] == "BLOCKED"
+    assert "HARDWARE_TARGET_MISMATCH" in _reasons(result)
+    assert "RUNTIME_TARGET_MISMATCH" in _reasons(result)
+    assert _deltas(result) == ()
+
+
+def test_cross_gpu_performance_ignores_spoofed_quality_approval() -> None:
+    bindings = _bindings("performance")
+    bindings["cross_hardware_quality_approved"] = "true"
+
+    result = _compare(
+        _performance(),
+        _performance(),
+        candidate_hardware=_hardware("NVIDIA RTX A5000"),
+        baseline_bindings=bindings,
+        candidate_bindings=dict(bindings),
+    )
+
+    assert result["status"] == "BLOCKED"
+    assert "HARDWARE_TARGET_MISMATCH" in _reasons(result)
+    assert _deltas(result) == ()
+
+
+def test_blocked_cross_gpu_quality_does_not_mutate_source_contracts() -> None:
+    baseline = _quality(0.4)
+    candidate = _quality(0.5)
+
+    before_baseline = baseline.model_dump(mode="json")
+    before_candidate = candidate.model_dump(mode="json")
+
+    result = _compare(
+        baseline,
+        candidate,
+        candidate_hardware=_hardware("NVIDIA RTX A5000"),
+    )
+
+    assert result["status"] == "BLOCKED"
+    assert _deltas(result) == ()
+    assert baseline.model_dump(mode="json") == before_baseline
+    assert candidate.model_dump(mode="json") == before_candidate
